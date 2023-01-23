@@ -1,0 +1,14 @@
+---
+BasedOnStyle: LLVM
+IndentWidth: 4
+UseTab: Never
+---
+Language: Cpp
+Standard: c++20
+
+BreakBeforeBraces: Allman
+IndentCaseLabels: false
+AccessModifierOffset: -4
+
+PointerAlignment: Left
+---
