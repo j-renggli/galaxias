@@ -9,8 +9,11 @@ source_group("include" REGULAR_EXPRESSION "include/${library_name}/.*")
 
 generate_export_header(${library_name} EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/${library_name}_export.h)
 
-target_include_directories(${objects_name} PUBLIC
+target_include_directories(${objects_name}
+PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/${library_name}/include>
+PRIVATE
+    $<TARGET_PROPERTY:math,INTERFACE_INCLUDE_DIRECTORIES>
 )
 
 target_include_directories(${library_name} PUBLIC
@@ -18,3 +21,9 @@ target_include_directories(${library_name} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
+target_link_libraries(${library_name}
+PRIVATE
+    math
+)
+
+add_subdirectory(test)

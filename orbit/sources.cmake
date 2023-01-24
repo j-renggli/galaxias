@@ -8,7 +8,6 @@ set(library_src
 
 set(object_library_src
     src/position.cpp
-    src/position.h
 )
 
 # Trick to show the file sources.cmake in the IDE
