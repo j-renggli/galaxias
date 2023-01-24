@@ -15,6 +15,9 @@ add_compile_options(
 
 include(GenerateExportHeader)
 
+find_package(Catch2)
+
+add_subdirectory(math)
 add_subdirectory(orbit)
 
 set(library_src
@@ -27,6 +30,7 @@ set_source_files_properties(.clang-format PROPERTIES HEADER_FILE_ONLY TRUE)
 add_executable(galaxias ${library_src})
 
 target_link_libraries(galaxias
+    math
     orbit
 )
 
