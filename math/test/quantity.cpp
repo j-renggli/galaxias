@@ -2,6 +2,9 @@
 
 #include <catch2/catch.hpp>
 
+using namespace math;
+using namespace math::quantity;
+
 namespace
 {
 constexpr double two{2.};
@@ -30,21 +33,21 @@ void checkUnit(const T&, const std::array<double, 8>& expectedRatios)
 
 TEST_CASE("Unitless")
 {
-    const math::Unitless x{pi};
+    const Unitless x{pi};
     CHECK(x.value() == pi);
     checkUnit(x, {{0., 0., 0., 0., 0., 0., 0., 0.}});
 }
 
 TEST_CASE("Second")
 {
-    const math::Second s{pi};
+    const Second s{pi};
     CHECK(s.value() == pi);
     checkUnit(s, {{1., 0., 0., 0., 0., 0., 0., 0.}});
 }
 
 TEST_CASE("Metre")
 {
-    const math::Metre m{pi};
+    const Metre m{pi};
     CHECK(m.value() == pi);
     checkUnit(m, {{0., 1., 0., 0., 0., 0., 0., 0.}});
 }
@@ -53,8 +56,9 @@ TEST_CASE("Multiplication")
 {
     {
         // Same dimension
-        const math::Metre ma{two};
-        const math::Metre mb{pi};
+        INFO("m*m");
+        const Metre ma{two};
+        const Metre mb{pi};
         const auto m2 = ma * mb;
 
         CHECK(m2.value() == two * pi);
@@ -63,8 +67,9 @@ TEST_CASE("Multiplication")
 
     {
         // Different dimensions
-        const math::Metre m{two};
-        const math::Second s{pi};
+        INFO("m*s");
+        const Metre m{two};
+        const Second s{pi};
         const auto ms = m * s;
         const auto sm = s * m;
 
@@ -79,8 +84,9 @@ TEST_CASE("Division")
 {
     {
         // Same dimension
-        const math::Metre ma{pi};
-        const math::Metre mb{two};
+        INFO("m/m");
+        const Metre ma{pi};
+        const Metre mb{two};
         const auto m2 = ma / mb;
 
         CHECK(m2.value() == pi / two);
@@ -89,22 +95,37 @@ TEST_CASE("Division")
 
     {
         // Different dimensions
-        const math::Metre m{two};
-        const math::Second s{pi};
+        const Metre m{two};
+        const Second s{pi};
         const auto ms = m / s;
         const auto sm = s / m;
 
-        CHECK(ms.value() == two / pi);
-        checkUnit(ms, {{-1., 1., 0., 0., 0., 0., 0., 0.}});
-        CHECK(sm.value() == pi / two);
-        checkUnit(sm, {{1., -1., 0., 0., 0., 0., 0., 0.}});
+        {
+            INFO("m/s");
+            CHECK(ms.value() == two / pi);
+            checkUnit(ms, {{-1., 1., 0., 0., 0., 0., 0., 0.}});
+        }
+        {
+            INFO("s/m");
+            CHECK(sm.value() == pi / two);
+            checkUnit(sm, {{1., -1., 0., 0., 0., 0., 0., 0.}});
+        }
     }
 }
 
-TEST_CASE("m3_s2")
+TEST_CASE("Composite")
 {
-    auto mu = math::Metre{2.} * math::Metre{3.} * math::Metre{4.} /
-              (math::Second{6.} * math::Second{2.});
-    CHECK(mu.value() == 2.);
-    checkUnit(mu, {{-2., 3., 0., 0., 0., 0., 0., 0.}});
+    {
+        INFO("m/s");
+        const Velocity v{two};
+        CHECK(v.value() == two);
+        checkUnit(v, {{-1., 1., 0., 0., 0., 0., 0., 0.}});
+    }
+
+    {
+        INFO("m*m*m/s*s");
+        auto mu = Metre{2.} * Metre{3.} * Metre{4.} / (Second{6.} * Second{2.});
+        CHECK(mu.value() == 2.);
+        checkUnit(mu, {{-2., 3., 0., 0., 0., 0., 0., 0.}});
+    }
 }

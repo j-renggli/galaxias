@@ -11,6 +11,7 @@ namespace ratio
 {
 using Zero = std::ratio<0>;
 using One = std::ratio<1>;
+using NegOne = std::ratio<-1>;
 using Two = std::ratio<2>;
 using Three = std::ratio<3>;
 } // namespace ratio
@@ -103,6 +104,9 @@ using Second = Unit<ratio::One>;
 // Length
 using Metre = Unit<ratio::Zero, ratio::One>;
 using MetreSquared = Unit<ratio::Zero, ratio::Two>;
+
+// Composite
+using Velocity = Unit<ratio::NegOne, ratio::One>;
 
 } // namespace unit
 } // namespace math

@@ -4,6 +4,8 @@
 
 namespace math
 {
+namespace quantity
+{
 
 template <class U> struct Quantity
 {
@@ -40,4 +42,8 @@ using Second = Quantity<unit::Second>;
 // Length
 using Metre = Quantity<unit::Metre>;
 
+// Composite
+using Velocity = Quantity<unit::Velocity>;
+
+} // namespace quantity
 } // namespace math
