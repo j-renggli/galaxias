@@ -7,15 +7,17 @@ namespace math
 namespace unit
 {
 
-namespace
+namespace ratio
 {
 using Zero = std::ratio<0>;
 using One = std::ratio<1>;
 using Two = std::ratio<2>;
-} // namespace
+using Three = std::ratio<3>;
+} // namespace ratio
 
-template <class T = Zero, class L = Zero, class M = Zero, class E = Zero,
-          class K = Zero, class A = Zero, class I = Zero, class U = Zero>
+template <class T = ratio::Zero, class L = ratio::Zero, class M = ratio::Zero,
+          class E = ratio::Zero, class K = ratio::Zero, class A = ratio::Zero,
+          class I = ratio::Zero, class U = ratio::Zero>
 struct Unit
 {
     using Time = T;
@@ -90,15 +92,17 @@ template <class U, class U2> struct DivideUnit
         std::ratio<U::Unitless::num - U2::Unitless::num, U::Unitless::den>>;
 };
 
-using Unitless = Unit<Zero, Zero, Zero, Zero, Zero, Zero, Zero, One>;
-using Radian = Unit<Zero, Zero, Zero, Zero, Zero, Zero, Zero, One>;
+using Unitless = Unit<ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero,
+                      ratio::Zero, ratio::Zero, ratio::Zero, ratio::One>;
+using Radian = Unit<ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero,
+                    ratio::Zero, ratio::Zero, ratio::Zero, ratio::One>;
 
 // Time
-using Second = Unit<One>;
+using Second = Unit<ratio::One>;
 
 // Length
-using Metre = Unit<Zero, One>;
-using MetreSquared = Unit<Zero, Two>;
+using Metre = Unit<ratio::Zero, ratio::One>;
+using MetreSquared = Unit<ratio::Zero, ratio::Two>;
 
 } // namespace unit
 } // namespace math

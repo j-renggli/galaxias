@@ -100,3 +100,11 @@ TEST_CASE("Division")
         checkUnit(sm, {{1., -1., 0., 0., 0., 0., 0., 0.}});
     }
 }
+
+TEST_CASE("m3_s2")
+{
+    auto mu = math::Metre{2.} * math::Metre{3.} * math::Metre{4.} /
+              (math::Second{6.} * math::Second{2.});
+    CHECK(mu.value() == 2.);
+    checkUnit(mu, {{-2., 3., 0., 0., 0., 0., 0., 0.}});
+}
