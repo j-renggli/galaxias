@@ -28,6 +28,13 @@ void checkUnit(const T&, const std::array<double, 8>& expectedRatios)
 
 } // namespace
 
+TEST_CASE("Unitless")
+{
+    const math::Unitless x{pi};
+    CHECK(x.value() == pi);
+    checkUnit(x, {{0., 0., 0., 0., 0., 0., 0., 0.}});
+}
+
 TEST_CASE("Second")
 {
     const math::Second s{pi};
@@ -42,12 +49,54 @@ TEST_CASE("Metre")
     checkUnit(m, {{0., 1., 0., 0., 0., 0., 0., 0.}});
 }
 
-TEST_CASE("Squared Metre")
+TEST_CASE("Multiplication")
 {
-    const math::Metre ma{two};
-    const math::Metre mb{pi};
-    const auto m2 = ma * mb;
+    {
+        // Same dimension
+        const math::Metre ma{two};
+        const math::Metre mb{pi};
+        const auto m2 = ma * mb;
 
-    CHECK(m2.value() == two * pi);
-    checkUnit(m2, {{0., 2., 0., 0., 0., 0., 0., 0.}});
+        CHECK(m2.value() == two * pi);
+        checkUnit(m2, {{0., 2., 0., 0., 0., 0., 0., 0.}});
+    }
+
+    {
+        // Different dimensions
+        const math::Metre m{two};
+        const math::Second s{pi};
+        const auto ms = m * s;
+        const auto sm = s * m;
+
+        CHECK(ms.value() == two * pi);
+        checkUnit(ms, {{1., 1., 0., 0., 0., 0., 0., 0.}});
+        CHECK(sm.value() == two * pi);
+        checkUnit(sm, {{1., 1., 0., 0., 0., 0., 0., 0.}});
+    }
+}
+
+TEST_CASE("Division")
+{
+    {
+        // Same dimension
+        const math::Metre ma{pi};
+        const math::Metre mb{two};
+        const auto m2 = ma / mb;
+
+        CHECK(m2.value() == pi / two);
+        checkUnit(m2, {{0., 0., 0., 0., 0., 0., 0., 0.}});
+    }
+
+    {
+        // Different dimensions
+        const math::Metre m{two};
+        const math::Second s{pi};
+        const auto ms = m / s;
+        const auto sm = s / m;
+
+        CHECK(ms.value() == two / pi);
+        checkUnit(ms, {{-1., 1., 0., 0., 0., 0., 0., 0.}});
+        CHECK(sm.value() == pi / two);
+        checkUnit(sm, {{1., -1., 0., 0., 0., 0., 0., 0.}});
+    }
 }
