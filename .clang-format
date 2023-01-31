@@ -9,6 +9,7 @@ Standard: c++20
 BreakBeforeBraces: Allman
 IndentCaseLabels: false
 AccessModifierOffset: -4
+AlwaysBreakTemplateDeclarations: true
 
 PointerAlignment: Left
 ---

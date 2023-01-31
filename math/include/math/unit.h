@@ -2,6 +2,8 @@
 
 #include <ratio>
 
+namespace galaxias
+{
 namespace math
 {
 namespace unit
@@ -13,6 +15,7 @@ using Zero = std::ratio<0>;
 using One = std::ratio<1>;
 using NegOne = std::ratio<-1>;
 using Two = std::ratio<2>;
+using NegTwo = std::ratio<-2>;
 using Three = std::ratio<3>;
 } // namespace ratio
 
@@ -31,7 +34,8 @@ struct Unit
     using Unitless = U;
 };
 
-template <class U, class U2> struct MultiplyUnit
+template <class U, class U2>
+struct MultiplyUnit
 {
     static_assert(U::Time::den == U2::Time::den, "Time denominator must match");
     static_assert(U::Length::den == U2::Length::den,
@@ -62,7 +66,8 @@ template <class U, class U2> struct MultiplyUnit
         std::ratio<U::Unitless::num + U2::Unitless::num, U::Unitless::den>>;
 };
 
-template <class U, class U2> struct DivideUnit
+template <class U, class U2>
+struct DivideUnit
 {
     static_assert(U::Time::den == U2::Time::den, "Time denominator must match");
     static_assert(U::Length::den == U2::Length::den,
@@ -95,8 +100,6 @@ template <class U, class U2> struct DivideUnit
 
 using Unitless = Unit<ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero,
                       ratio::Zero, ratio::Zero, ratio::Zero, ratio::One>;
-using Radian = Unit<ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero,
-                    ratio::Zero, ratio::Zero, ratio::Zero, ratio::One>;
 
 // Time
 using Second = Unit<ratio::One>;
@@ -110,3 +113,4 @@ using Velocity = Unit<ratio::NegOne, ratio::One>;
 
 } // namespace unit
 } // namespace math
+} // namespace galaxias

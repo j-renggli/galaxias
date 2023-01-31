@@ -4,6 +4,8 @@
 
 #include <array>
 
+namespace galaxias
+{
 namespace orbit
 {
 namespace coordinates
@@ -27,3 +29,4 @@ private:
 
 } // namespace coordinates
 } // namespace orbit
+} // namespace galaxias

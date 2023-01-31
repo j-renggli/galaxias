@@ -2,15 +2,17 @@
 
 #include <catch2/catch.hpp>
 
+using namespace galaxias;
 using namespace math;
-using namespace math::quantity;
+using namespace quantity;
 
 namespace
 {
 constexpr double two{2.};
 constexpr double pi{3.14};
 
-template <class R> void checkRatio(double expected)
+template <class R>
+void checkRatio(double expected)
 {
     CHECK(static_cast<double>(R::num) / static_cast<double>(R::den) ==
           expected);

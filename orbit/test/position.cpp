@@ -2,6 +2,7 @@
 
 #include <catch2/catch.hpp>
 
+using namespace galaxias;
 using namespace orbit;
 using namespace coordinates;
 

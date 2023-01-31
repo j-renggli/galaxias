@@ -2,12 +2,15 @@
 
 #include "unit.h"
 
+namespace galaxias
+{
 namespace math
 {
 namespace quantity
 {
 
-template <class U> struct Quantity
+template <class U>
+struct Quantity
 {
     using Unit = U;
 
@@ -35,6 +38,7 @@ private:
 
 // Unitless
 using Unitless = Quantity<unit::Unitless>;
+using Radian = Quantity<unit::Unitless>;
 
 // Time
 using Second = Quantity<unit::Second>;
@@ -47,3 +51,4 @@ using Velocity = Quantity<unit::Velocity>;
 
 } // namespace quantity
 } // namespace math
+} // namespace galaxias
