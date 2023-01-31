@@ -3,6 +3,8 @@ set(objects_name ${library_name}_object)
 
 set(library_src
     include/${library_name}/quantity.h
+    include/${library_name}/range.h
+    include/${library_name}/range.inl
     include/${library_name}/unit.h
 
     src/quantity.cpp

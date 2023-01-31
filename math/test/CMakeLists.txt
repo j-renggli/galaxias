@@ -4,6 +4,7 @@ set(test_name test_${library_name})
 
 set(library_src
     quantity.cpp
+    range.cpp
 )
 
 add_executable(${test_name} ${library_src})
