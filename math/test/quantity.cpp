@@ -115,6 +115,53 @@ TEST_CASE("Division")
     }
 }
 
+TEST_CASE("Power")
+{
+    {
+        // Square
+        INFO("m*m");
+        const Metre ma{two};
+        const auto m2 = ma.pow<2>();
+
+        CHECK(m2.value() == two * two);
+        checkUnit(m2, {{0., 2., 0., 0., 0., 0., 0., 0.}});
+    }
+
+    {
+        // Inverse
+        const Velocity v{two};
+        INFO("m/s -1");
+        const auto x = v.pow<-1>();
+
+        CHECK(x.value() == 1. / two);
+        checkUnit(x, {{1., -1., 0., 0., 0., 0., 0., 0.}});
+    }
+}
+
+TEST_CASE("Root")
+{
+    {
+        // Square root
+        INFO("m*m");
+        const Metre ma{two};
+        const auto m2 = ma * ma;
+        const auto m = m2.root<2>();
+
+        CHECK(m.value() == two);
+        checkUnit(m, {{0., 1., 0., 0., 0., 0., 0., 0.}});
+    }
+
+    {
+        // Inverse
+        const Velocity v{two};
+        INFO("m/s -1");
+        const auto x = v.root<-1>();
+
+        CHECK(x.value() == 1. / two);
+        checkUnit(x, {{1., -1., 0., 0., 0., 0., 0., 0.}});
+    }
+}
+
 TEST_CASE("Composite")
 {
     {

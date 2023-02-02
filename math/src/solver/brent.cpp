@@ -28,8 +28,8 @@ double Brent::findRoot(const IFunction& fct,
 
     if (y0 * y1 > 0.)
     {
-        throw std::runtime_error("Both limits evaluate to positive or "
-                                 "negative, won't search for a root here");
+        throw std::runtime_error(
+            "Both limits evaluate to same sign, won't search for a root here");
     }
 
     if (y0 * y0 < y1 * y1)
