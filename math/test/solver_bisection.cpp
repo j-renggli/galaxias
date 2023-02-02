@@ -1,27 +1,13 @@
 #include <math/solver/bisection.h>
 
+#include "utils/functions.h"
+
 #include <catch2/catch.hpp>
 
 using namespace galaxias;
 using namespace math;
 using namespace solver;
-
-namespace
-{
-
-class Linear : public IFunction
-{
-    virtual double f(double x) const override { return x; }
-    virtual double df(double) const override { return 1.; }
-};
-
-class Quadratic : public IFunction
-{
-    virtual double f(double x) const override { return x * x - 3. * x - 6; }
-    virtual double df(double x) const override { return 2. * x - 3.; }
-};
-
-} // namespace
+using namespace test;
 
 TEST_CASE("Bisection with y = x")
 {

@@ -19,11 +19,11 @@ double Bisection::findRoot(const IFunction& fct,
 
     if (y0 * y0 <= tol2)
     {
-        return range.low();
+        return x0;
     }
     if (y1 * y1 <= tol2)
     {
-        return range.high();
+        return x1;
     }
 
     if (y0 * y1 > 0.)

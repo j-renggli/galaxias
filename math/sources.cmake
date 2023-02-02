@@ -8,10 +8,12 @@ set(library_src
     include/${library_name}/unit.h
 
     include/${library_name}/solver/bisection.h
+    include/${library_name}/solver/brent.h
     include/${library_name}/solver/function.h
     include/${library_name}/solver/solver.h
 
     src/solver/bisection.cpp
+    src/solver/brent.cpp
 )
 
 # Trick to show the file sources.cmake in the IDE

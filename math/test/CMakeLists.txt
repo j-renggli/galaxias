@@ -4,8 +4,12 @@ set(test_name test_${library_name})
 
 set(library_src
     solver_bisection.cpp
+    solver_brent.cpp
+
     quantity.cpp
     range.cpp
+
+    utils/functions.h
 )
 
 add_executable(${test_name} ${library_src})
