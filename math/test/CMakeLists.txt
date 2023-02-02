@@ -3,6 +3,8 @@ get_filename_component(library_name ${library_name} NAME)
 set(test_name test_${library_name})
 
 set(library_src
+    rng_mersenne.cpp
+
     solver_bisection.cpp
     solver_brent.cpp
 
