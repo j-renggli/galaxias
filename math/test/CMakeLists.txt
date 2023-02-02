@@ -3,6 +3,7 @@ get_filename_component(library_name ${library_name} NAME)
 set(test_name test_${library_name})
 
 set(library_src
+    solver_bisection.cpp
     quantity.cpp
     range.cpp
 )
@@ -17,4 +18,7 @@ target_include_directories(${test_name} PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/${library_name}/include>
 )
 
-target_link_libraries(${test_name} Catch2::Catch2WithMain)
+target_link_libraries(${test_name}
+    math
+    Catch2::Catch2WithMain
+)

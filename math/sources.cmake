@@ -7,7 +7,11 @@ set(library_src
     include/${library_name}/range.inl
     include/${library_name}/unit.h
 
-    src/quantity.cpp
+    include/${library_name}/solver/bisection.h
+    include/${library_name}/solver/function.h
+    include/${library_name}/solver/solver.h
+
+    src/solver/bisection.cpp
 )
 
 # Trick to show the file sources.cmake in the IDE
