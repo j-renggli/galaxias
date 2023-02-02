@@ -54,6 +54,15 @@ TEST_CASE("Metre")
     checkUnit(m, {{0., 1., 0., 0., 0., 0., 0., 0.}});
 }
 
+TEST_CASE("Unary minus")
+{
+    const Metre mi{pi};
+    const Metre mo = -mi;
+
+    CHECK(mo.value() == -pi);
+    checkUnit(mo, {{0., 1., 0., 0., 0., 0., 0., 0.}});
+}
+
 TEST_CASE("Multiplication")
 {
     {

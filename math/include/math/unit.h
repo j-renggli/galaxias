@@ -112,6 +112,7 @@ using Unitless = Unit<ratio::Zero,
 
 // Time
 using Second = Unit<ratio::One>;
+using Frequency = Unit<ratio::NegOne>;
 
 // Length
 using Metre = Unit<ratio::Zero, ratio::One>;

@@ -21,6 +21,9 @@ struct Quantity
     {
     }
 
+    /// Unary minus
+    Quantity operator-() const { return Quantity(-val_); }
+
     /// Multiply with another quantity
     template <class U2,
               class Out = typename unit::MultiplyUnit<U, U2>::value_type>
@@ -70,6 +73,7 @@ using Radian = Quantity<unit::Unitless>;
 
 // Time
 using Second = Quantity<unit::Second>;
+using Frequency = Quantity<unit::Frequency>;
 
 // Length
 using Metre = Quantity<unit::Metre>;
