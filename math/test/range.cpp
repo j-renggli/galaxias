@@ -14,8 +14,18 @@ namespace
 
 TEMPLATE_TEST_CASE("Invalid range", "[range]", int, double)
 {
-    CHECK_THROWS_AS(Range(TestType(3), TestType(2)), std::logic_error);
-    CHECK_THROWS_AS(Range(TestType(2), TestType(2)), std::logic_error);
+    CHECK_THROWS_AS(Range(TestType(3), TestType(2)), std::runtime_error);
+    CHECK_THROWS_AS(Range(TestType(2), TestType(2)), std::runtime_error);
+}
+
+TEMPLATE_TEST_CASE("Range constructor", "[range]", int, double)
+{
+    constexpr TestType lo{1};
+    constexpr TestType hi{3};
+
+    const Range r{lo, hi};
+    CHECK(r.low() == lo);
+    CHECK(r.high() == hi);
 }
 
 TEMPLATE_TEST_CASE("Using ranges", "[range]", int, double)

@@ -10,6 +10,11 @@ BreakBeforeBraces: Allman
 IndentCaseLabels: false
 AccessModifierOffset: -4
 AlwaysBreakTemplateDeclarations: true
+BreakConstructorInitializers: BeforeComma
 
 PointerAlignment: Left
+
+BinPackArguments: false
+BinPackParameters: false
+ExperimentalAutoDetectBinPacking: false
 ---
