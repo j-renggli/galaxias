@@ -8,6 +8,7 @@ set(library_src
     solver_bisection.cpp
     solver_brent.cpp
 
+    bounded_quantity.cpp
     quantity.cpp
     range.cpp
 
