@@ -1,6 +1,7 @@
 #pragma once
 
 #include "quantity.h"
+#include <math/range.h>
 
 #include <stdexcept>
 
@@ -15,25 +16,22 @@ template <class U>
 struct BoundedQuantity : public Quantity<U>
 {
     constexpr BoundedQuantity(const Quantity<U>& qty,
-                              double min = -std::numeric_limits<double>::max(),
-                              double max = std::numeric_limits<double>::max())
+                              const Range<double>& range = Range<double>(-std::numeric_limits<double>::max(),
+                                                                         std::numeric_limits<double>::max()))
         : Quantity<U>{qty}
-        , min_{min}
-        , max_{max}
+        , range_{range}
     {
-        if (this->value() < min_ || this->value() > max_)
+        if (!range_.includes(qty.value()))
         {
-            throw std::runtime_error("Out of bounds " + std::to_string(min_) + " <= " + std::to_string(this->value()) +
-                                     " <= " + std::to_string(max_));
+            throw std::runtime_error("Out of bounds " + std::to_string(range_.low()) +
+                                     " <= " + std::to_string(this->value()) + " <= " + std::to_string(range_.high()));
         }
     }
 
-    double min() const { return min_; }
-    double max() const { return max_; }
+    const Range<double>& range() const { return range_; }
 
 private:
-    double min_;
-    double max_;
+    Range<double> range_;
 };
 
 // Unitless

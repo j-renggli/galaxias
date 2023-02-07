@@ -19,17 +19,18 @@ public:
     {
         if (low >= high)
         {
-            throw std::runtime_error("Range must have low < high; has " +
-                                     std::to_string(low) +
+            throw std::runtime_error("Range must have low < high; has " + std::to_string(low) +
                                      " >= " + std::to_string(high));
         }
     }
 
     const T& low() const noexcept { return lo_; }
     const T& high() const noexcept { return hi_; }
+    T mid() const noexcept { return (lo_ + hi_) * 0.5; }
+
+    bool includes(const T& value) const;
 
     void clamp(T& value) const;
-
     void modulo(T& value) const;
 
 private:

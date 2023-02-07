@@ -14,9 +14,7 @@ class Bisection : public ISolver
 public:
     virtual ~Bisection() = default;
 
-    double findRoot(const IFunction& fct,
-                    const Range<double>& range,
-                    const double tolerance = 1e-7) const override;
+    double findRoot(const IFunction& fct, const Range<double>& range, const double tolerance = 1e-7) const override;
 };
 
 } // namespace solver

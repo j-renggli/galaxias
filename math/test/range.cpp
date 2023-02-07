@@ -21,11 +21,19 @@ TEMPLATE_TEST_CASE("Invalid range", "[range]", int, double)
 TEMPLATE_TEST_CASE("Range constructor", "[range]", int, double)
 {
     constexpr TestType lo{1};
+    constexpr TestType mid{2};
     constexpr TestType hi{3};
 
     const Range r{lo, hi};
     CHECK(r.low() == lo);
+    CHECK(r.mid() == mid);
     CHECK(r.high() == hi);
+
+    CHECK_FALSE(r.includes(0));
+    CHECK(r.includes(1));
+    CHECK(r.includes(2));
+    CHECK(r.includes(3));
+    CHECK_FALSE(r.includes(4));
 }
 
 TEMPLATE_TEST_CASE("Using ranges", "[range]", int, double)

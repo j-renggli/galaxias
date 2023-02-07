@@ -6,6 +6,12 @@ namespace math
 {
 
 template <class T>
+bool Range<T>::includes(const T& value) const
+{
+    return value >= lo_ && value <= hi_;
+}
+
+template <class T>
 void Range<T>::clamp(T& value) const
 {
     if (value > hi_)
