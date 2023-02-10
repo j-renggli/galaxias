@@ -25,6 +25,14 @@ void Range<T>::clamp(T& value) const
 }
 
 template <class T>
+T Range<T>::clamp(const T& value) const
+{
+    T clamped{value};
+    clamp(clamped);
+    return clamped;
+}
+
+template <class T>
 void Range<T>::modulo(T& value) const
 {
     const double diff = hi_ - lo_;
@@ -44,6 +52,14 @@ void Range<T>::modulo(T& value) const
     {
         value = lo_;
     }
+}
+
+template <class T>
+T Range<T>::modulo(const T& value) const
+{
+    T modulated{value};
+    modulo(modulated);
+    return modulated;
 }
 
 } // namespace math

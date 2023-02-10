@@ -31,7 +31,9 @@ public:
     bool includes(const T& value) const;
 
     void clamp(T& value) const;
+    T clamp(const T& value) const;
     void modulo(T& value) const;
+    T modulo(const T& value) const;
 
 private:
     T lo_;
