@@ -8,9 +8,12 @@ namespace coordinates
 {
 
 Cartesian::Cartesian(const Position& position, const Velocity& velocity)
-    : position_{position}, velocity_{velocity}
+    : r_{position}
+    , v_{velocity}
 {
 }
+
+Cartesian Cartesian::zero() { return Cartesian{Position{Position::value_type()}, Velocity{Velocity::value_type()}}; }
 
 } // namespace coordinates
 } // namespace orbit

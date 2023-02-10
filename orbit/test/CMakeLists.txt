@@ -21,6 +21,7 @@ PRIVATE
 )
 
 target_link_libraries(${test_name}
+    math
     orbit
     Catch2::Catch2WithMain
 )

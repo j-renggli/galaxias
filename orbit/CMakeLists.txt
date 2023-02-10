@@ -22,6 +22,8 @@ target_include_directories(${library_name} PUBLIC
 )
 
 target_link_libraries(${library_name}
+PUBLIC
+    Eigen3::Eigen
 PRIVATE
     math
 )
