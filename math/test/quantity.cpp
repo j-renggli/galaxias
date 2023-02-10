@@ -14,8 +14,7 @@ constexpr double pi{3.14};
 template <class R>
 void checkRatio(double expected)
 {
-    CHECK(static_cast<double>(R::num) / static_cast<double>(R::den) ==
-          expected);
+    CHECK(static_cast<double>(R::num) / static_cast<double>(R::den) == expected);
 }
 
 template <class T>
@@ -52,6 +51,13 @@ TEST_CASE("Metre")
     const Metre m{pi};
     CHECK(m.value() == pi);
     checkUnit(m, {{0., 1., 0., 0., 0., 0., 0., 0.}});
+}
+
+TEST_CASE("Kilogram")
+{
+    const Kilogram kg{pi};
+    CHECK(kg.value() == pi);
+    checkUnit(kg, {{0., 0., 1., 0., 0., 0., 0., 0.}});
 }
 
 TEST_CASE("Unary minus")

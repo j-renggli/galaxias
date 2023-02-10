@@ -61,8 +61,7 @@ struct PowerUnit
                             std::ratio_multiply<typename U::ElectricCurrent, Ratio>,
                             std::ratio_multiply<typename U::Temperature, Ratio>,
                             std::ratio_multiply<typename U::Amount, Ratio>,
-                            std::ratio_multiply<typename U::LuminousIntensity, Ratio>,
-                            std::ratio_multiply<typename U::Unitless, Ratio>>;
+                            std::ratio_multiply<typename U::LuminousIntensity, Ratio>>;
 };
 
 template <class U, class U2>
@@ -88,16 +87,21 @@ struct DivideUnit
              std::ratio<U::Unitless::num - U2::Unitless::num, U::Unitless::den>>;
 };
 
-using Unitless =
-    Unit<ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero, ratio::One>;
+using Unitless = Unit<>;
 
 // Time
 using Second = Unit<ratio::One>;
+using SecondSquared = Unit<ratio::Two>;
 using Frequency = Unit<ratio::NegOne>;
+using FrequencySquared = Unit<ratio::NegTwo>;
 
 // Length
 using Metre = Unit<ratio::Zero, ratio::One>;
+using PerMetre = Unit<ratio::Zero, ratio::NegOne>;
 using MetreSquared = Unit<ratio::Zero, ratio::Two>;
+
+// Weight
+using Kilogram = Unit<ratio::Zero, ratio::Zero, ratio::One>;
 
 // Composite
 using Velocity = Unit<ratio::NegOne, ratio::One>;

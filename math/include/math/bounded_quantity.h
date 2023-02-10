@@ -12,20 +12,35 @@ namespace math
 namespace quantity
 {
 
-template <class U>
-struct BoundedQuantity : public Quantity<U>
+template <class T, class U>
+struct BoundedQuantity : public Quantity<T, U>
 {
-    constexpr BoundedQuantity(const Quantity<U>& qty,
+    constexpr BoundedQuantity(const Quantity<T, U>& qty,
                               const Range<double>& range = Range<double>(-std::numeric_limits<double>::max(),
                                                                          std::numeric_limits<double>::max()))
-        : Quantity<U>{qty}
+        : Quantity<T, U>{qty}
         , range_{range}
     {
-        if (!range_.includes(qty.value()))
+        if (!std::isnan(qty.value()) && !range_.includes(qty.value()))
         {
             throw std::runtime_error("Out of bounds " + std::to_string(range_.low()) +
                                      " <= " + std::to_string(this->value()) + " <= " + std::to_string(range_.high()));
         }
+    }
+    constexpr BoundedQuantity(const BoundedQuantity& bqty)
+        : Quantity<T, U>{bqty}
+        , range_{bqty.range_}
+    {
+    }
+    constexpr BoundedQuantity(BoundedQuantity&& qty) = default;
+    ~BoundedQuantity() = default;
+
+    BoundedQuantity& operator=(const BoundedQuantity& rhs) = default;
+    BoundedQuantity& operator=(BoundedQuantity&& rhs) = default;
+
+    static BoundedQuantity fromModulo(const Quantity<T, U>& value, const Range<double>& range)
+    {
+        return BoundedQuantity{range.modulo(value.value()), range};
     }
 
     const Range<double>& range() const { return range_; }
@@ -35,18 +50,21 @@ private:
 };
 
 // Unitless
-using BoundedUnitless = BoundedQuantity<unit::Unitless>;
-using BoundedRadian = BoundedQuantity<unit::Unitless>;
+using BoundedUnitless = BoundedQuantity<double, unit::Unitless>;
+using BoundedRadian = BoundedQuantity<double, unit::Unitless>;
 
 // Time
-using BoundedSecond = BoundedQuantity<unit::Second>;
-using BoundedFrequency = BoundedQuantity<unit::Frequency>;
+using BoundedSecond = BoundedQuantity<double, unit::Second>;
+using BoundedFrequency = BoundedQuantity<double, unit::Frequency>;
 
 // Length
-using BoundedMetre = BoundedQuantity<unit::Metre>;
+using BoundedMetre = BoundedQuantity<double, unit::Metre>;
+
+// Mass
+using BoundedKilogram = BoundedQuantity<double, unit::Kilogram>;
 
 // Composite
-using BoundedVelocity = BoundedQuantity<unit::Velocity>;
+using BoundedVelocity = BoundedQuantity<double, unit::Velocity>;
 
 } // namespace quantity
 } // namespace math
