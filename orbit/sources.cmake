@@ -3,10 +3,12 @@ set(objects_name ${library_name}_object)
 
 set(library_src
     include/${library_name}/centerofmass.h
+    include/${library_name}/orbital_elements.h
     include/${library_name}/position.h
 )
 
 set(object_library_src
+    src/orbital_elements.cpp
     src/position.cpp
 )
 
