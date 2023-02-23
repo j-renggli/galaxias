@@ -93,7 +93,7 @@ struct Quantity
         return Quantity<double, Out>{val_.dot(rhs.value())};
     }
     template <class U2, class Out = typename unit::MultiplyUnit<U, U2>::value_type>
-    Quantity<double, Out> cross(const Quantity<T, U2>& rhs) const
+    Quantity<T, Out> cross(const Quantity<T, U2>& rhs) const
     {
         return Quantity<T, Out>{val_.cross(rhs.value())};
     }
