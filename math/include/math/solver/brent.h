@@ -14,7 +14,9 @@ class Brent : public ISolver
 public:
     virtual ~Brent() = default;
 
-    double findRoot(const IFunction& fct, const Range<double>& range, const double tolerance = 1e-7) const override;
+    double rootOf(const IFunction& fct, const Range<double>& range, const double tolerance = 1e-7) const override;
+
+    static double findRoot(const IFunction& fct, const Range<double>& range, const double tolerance = 1e-7);
 };
 
 } // namespace solver

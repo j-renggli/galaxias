@@ -12,29 +12,19 @@ using namespace test;
 TEST_CASE("Bisection with y = x")
 {
     Linear lin;
-    Bisection bis;
 
-    CHECK_THROWS_AS(bis.findRoot(lin, Range<double>(1., 2.)),
-                    std::runtime_error);
-    CHECK_THROWS_AS(bis.findRoot(lin, Range<double>(-2., -1.)),
-                    std::runtime_error);
+    CHECK_THROWS_AS(Bisection::findRoot(lin, Range<double>(1., 2.)), std::runtime_error);
+    CHECK_THROWS_AS(Bisection::findRoot(lin, Range<double>(-2., -1.)), std::runtime_error);
 
-    CHECK(bis.findRoot(lin, Range<double>(0., 1.5)) == 0.);
+    CHECK(Bisection::findRoot(lin, Range<double>(0., 1.5)) == 0.);
+    CHECK(static_cast<const ISolver&>(Bisection()).findRoot(lin, Range<double>(0., 1.5)) == 0.);
 }
 
 TEST_CASE("Bisection with y = x*x -3x -6")
 {
     Quadratic lin;
-    Bisection bis;
 
-    SECTION("left root")
-    {
-        CHECK(bis.findRoot(lin, Range<double>(-2., 3.)) ==
-              Approx(-1.3722813204));
-    }
+    SECTION("left root") { CHECK(Bisection::findRoot(lin, Range<double>(-2., 3.)) == Approx(-1.3722813204)); }
 
-    SECTION("right root")
-    {
-        CHECK(bis.findRoot(lin, Range<double>(0., 5.)) == Approx(4.3722813204));
-    }
+    SECTION("right root") { CHECK(Bisection::findRoot(lin, Range<double>(0., 5.)) == Approx(4.3722813204)); }
 }

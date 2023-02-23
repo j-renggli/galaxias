@@ -7,9 +7,13 @@ namespace math
 namespace solver
 {
 
-double NewtonRaphson::findRoot(const IFunction& fct, const Range<double>& range, const double tolerance) const
+double NewtonRaphson::rootOf(const IFunction& fct, const Range<double>& range, const double tolerance) const
 {
-    double x = range.mid();
+    return NewtonRaphson::findRoot(fct, range.mid(), tolerance);
+}
+
+double NewtonRaphson::findRoot(const IFunction& fct, double x, const double tolerance)
+{
     constexpr size_t max{50}; // TODO: user-defined max steps
     for (size_t i = 0; i < max; ++i)
     {
@@ -28,7 +32,7 @@ double NewtonRaphson::findRoot(const IFunction& fct, const Range<double>& range,
         x = x1;
     }
 
-    throw std::runtime_error("Failed to converge after " + std::to_string(max) + " iterations");
+    throw ConvergenceException(max /*"Failed to converge after " + std::to_string(max) + " iterations"*/);
 }
 
 } // namespace solver

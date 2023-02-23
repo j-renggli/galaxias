@@ -7,9 +7,12 @@ namespace math
 namespace solver
 {
 
-double Bisection::findRoot(const IFunction& fct,
-                           const Range<double>& range,
-                           const double tolerance) const
+double Bisection::rootOf(const IFunction& fct, const Range<double>& range, const double tolerance) const
+{
+    return Bisection::findRoot(fct, range, tolerance);
+}
+
+double Bisection::findRoot(const IFunction& fct, const Range<double>& range, const double tolerance)
 {
     double x0 = range.low();
     const double y0 = fct.f(x0);
@@ -28,8 +31,7 @@ double Bisection::findRoot(const IFunction& fct,
 
     if (y0 * y1 > 0.)
     {
-        throw std::runtime_error(
-            "Both limits evaluate to same sign, won't search for a root here");
+        throw std::runtime_error("Both limits evaluate to same sign, won't search for a root here");
     }
 
     double x = x1; // Arbitrary

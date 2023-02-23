@@ -7,9 +7,12 @@ namespace math
 namespace solver
 {
 
-double Brent::findRoot(const IFunction& fct,
-                       const Range<double>& range,
-                       const double tolerance) const
+double Brent::rootOf(const IFunction& fct, const Range<double>& range, const double tolerance) const
+{
+    return Brent::findRoot(fct, range, tolerance);
+}
+
+double Brent::findRoot(const IFunction& fct, const Range<double>& range, const double tolerance)
 {
     double x0 = range.low();
     double y0 = fct.f(x0);
@@ -28,8 +31,7 @@ double Brent::findRoot(const IFunction& fct,
 
     if (y0 * y1 > 0.)
     {
-        throw std::runtime_error(
-            "Both limits evaluate to same sign, won't search for a root here");
+        throw std::runtime_error("Both limits evaluate to same sign, won't search for a root here");
     }
 
     if (y0 * y0 < y1 * y1)
@@ -51,8 +53,7 @@ double Brent::findRoot(const IFunction& fct,
             break;
 
         if (y2 != y0 && y2 != y1)
-            x = (x0 * y1 * y2) / ((y0 - y1) * (y0 - y2)) +
-                (x1 * y0 * y2) / ((y1 - y0) * (y1 - y2)) +
+            x = (x0 * y1 * y2) / ((y0 - y1) * (y0 - y2)) + (x1 * y0 * y2) / ((y1 - y0) * (y1 - y2)) +
                 (x2 * y0 * y1) / ((y2 - y0) * (y2 - y1));
         else
             x = x1 - y1 * (x1 - x0) / (y1 - y0);
