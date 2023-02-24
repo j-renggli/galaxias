@@ -20,7 +20,15 @@ double NewtonRaphson::findRoot(const IFunction& fct, double x, const double tole
         const double y = fct.f(x);
         const double dy = fct.df(x);
 
-        // TODO: Check abs(dy) is large enough else throw
+        constexpr double epsilon{1e-15};
+        if (std::abs(dy) < epsilon)
+        {
+            if (y < epsilon)
+            {
+                return x;
+            }
+            break;
+        }
 
         const double x1 = x - y / dy;
 
