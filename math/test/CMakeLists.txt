@@ -9,6 +9,7 @@ set(library_src
     solver_brent.cpp
     solver_newton_raphson.cpp
 
+    analytic_roots.cpp
     bounded_quantity.cpp
     quantity.cpp
     range.cpp

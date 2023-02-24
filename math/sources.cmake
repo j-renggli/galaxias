@@ -2,6 +2,7 @@ get_filename_component(library_name ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(objects_name ${library_name}_object)
 
 set(library_src
+    include/${library_name}/analytic_roots.h
     include/${library_name}/bounded_quantity.h
     include/${library_name}/quantity.h
     include/${library_name}/range.h
@@ -15,6 +16,8 @@ set(library_src
     include/${library_name}/solver/function.h
     include/${library_name}/solver/newton_raphson.h
     include/${library_name}/solver/solver.h
+
+    src/analytic_roots.cpp
 
     src/rng/mersenne.cpp
 
