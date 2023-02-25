@@ -178,3 +178,44 @@ TEST_CASE("Elliptic orbit")
         CHECK(coords.position().cross(coords.velocity())[2].value() == Approx(h0));
     }
 }
+
+TEST_CASE("Circular construction")
+{
+    constexpr double mu2{4e14};
+    constexpr double r = 1e6;
+    const CenterOfMass circular(
+        GravitationalParam{mu2}, time1, Cartesian{{{0., r, 0.}}, {{sqrt(mu2 * r) / r, 0., 0.}}}, nullptr);
+    CHECK(circular.orbitalElements().eccentricity_.value() == 0.);
+    REQUIRE(circular.orbitType() == CenterOfMass::OrbitType::Circular);
+
+    auto solver = UniversalKeplerSolver::create(circular);
+    REQUIRE(dynamic_cast<EllipticKeplerSolver*>(solver.get()) != nullptr);
+
+    const double root = solver->solveForInternal(time0);
+    const double guess = solver->initialGuess();
+    CHECK(guess == Approx(0.0000896106));
+    CHECK(solver->f(guess) == Approx(-19.3200450189));
+    CHECK(solver->df(guess) == Approx(1975587.5485922508));
+
+    CHECK(root == Approx(0.0000995311));
+    CHECK(solver->f(root) == Approx(-7.2475359e-12));
+    CHECK(solver->df(root) == Approx(1913159.9215603475));
+
+    const auto factors = solver->factorsAt(guess);
+    CHECK(factors.f == Approx(-0.2196108718));
+    CHECK(factors.g == Approx(109.7599210218));
+    CHECK(factors.df == Approx(-0.0098764294));
+    CHECK(factors.dg == Approx(0.3826591625));
+
+    const auto rootFactors = solver->factorsAt(root);
+    CHECK(rootFactors.f == Approx(-0.4076014692));
+    CHECK(rootFactors.g == Approx(116.0380695357));
+    CHECK(rootFactors.df == Approx(-0.0095460909));
+    CHECK(rootFactors.dg == Approx(0.2642531064));
+
+    // Period results in same guess
+    CHECK(circular.orbitalPeriod().low() == 0.);
+    CHECK(circular.orbitalPeriod().high() == Approx(314.159265359));
+    CHECK(root == Approx(solver->solveForInternal(time0 - circular.orbitalPeriod().high())));
+    CHECK(root == Approx(solver->solveForInternal(time0 + circular.orbitalPeriod().high())));
+}
