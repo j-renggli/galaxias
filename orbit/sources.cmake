@@ -11,6 +11,12 @@ set(object_library_src
     src/centerofmass.cpp
     src/orbital_elements.cpp
     src/position.cpp
+
+    src/keplersolver/elliptic.h
+    src/keplersolver/hyperbolic.h
+    src/keplersolver/parabolic.h
+    src/keplersolver/solver.cpp
+    src/keplersolver/solver.h
 )
 
 # Trick to show the file sources.cmake in the IDE

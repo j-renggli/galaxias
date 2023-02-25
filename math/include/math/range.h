@@ -35,6 +35,8 @@ public:
     void modulo(T& value) const;
     T modulo(const T& value) const;
 
+    static Range make(const T& a, const T& b) { return Range{std::min(a, b), std::max(a, b)}; }
+
 private:
     T lo_;
     T hi_;

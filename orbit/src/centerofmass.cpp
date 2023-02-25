@@ -17,6 +17,8 @@ using SquaredVelocity = qty::Quantity<double, MultiplyUnit<MetreSquared, Frequen
 using UnitlessVector = qty::Quantity<Vector, Unitless>;
 using UnitMMS = MultiplyUnit<MetreSquared, Frequency>::value_type;
 
+constexpr double two_pi{2. * M_PI};
+
 OrbitalElements
 deduceElements(const GravitationalParam& centralMu, const Cartesian::Position& r0, const Cartesian::Velocity& v0)
 {
@@ -83,6 +85,37 @@ CenterOfMass::CenterOfMass(const GravitationalParam& mu,
     , oe_{deduceElements(parent ? parent->mu_ : mu_, coord0_.position(), coord0_.velocity())}
     , parent_{parent}
 {
+    if (oe_.eccentricity_ == 0.)
+    {
+        orbitType_ = OrbitType::Circular;
+    }
+    else if (oe_.eccentricity_ < 1.)
+    {
+        orbitType_ = OrbitType::Elliptic;
+    }
+    else if (oe_.eccentricity_ > 1.)
+    {
+        orbitType_ = OrbitType::Hyperbolic;
+    }
+    else if (coord0_.position().cross(coord0_.velocity()).squaredNorm() == 0.)
+    {
+        orbitType_ = OrbitType::Degenerate;
+    }
+    else
+    {
+        orbitType_ = OrbitType::Parabolic;
+    }
+}
+
+math::Range<double> CenterOfMass::orbitalPeriod() const
+{
+    if (oe_.eccentricity_ >= 1.)
+    {
+        throw std::runtime_error("Orbital period is only defined for elliptical (circular) case");
+    }
+
+    const qty::Frequency freq{(oe_.alpha_.pow<3>() * (parent_ ? parent_->mu_ : mu_)).root<2>()};
+    return math::Range<double>{0., two_pi / freq.value()};
 }
 
 } // namespace orbit

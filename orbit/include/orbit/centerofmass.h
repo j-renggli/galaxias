@@ -25,13 +25,34 @@ public:
                  const coordinates::Cartesian& coord0,
                  const std::shared_ptr<CenterOfMass>& parent);
 
+    const GravitationalParam& mu() const { return mu_; }
+    const qty::Second& initialTime() const { return t0_; }
+
+    const coordinates::Cartesian& initialCoordinates() const { return coord0_; }
+    const coordinates::Cartesian::Position& initialPosition() const { return coord0_.position(); }
+    const coordinates::Cartesian::Velocity& initialVelocity() const { return coord0_.velocity(); }
+
     const OrbitalElements& orbitalElements() const { return oe_; }
+
+    /// Helper function for elliptic case. Throws in all other cases
+    math::Range<double> orbitalPeriod() const;
+
+    enum class OrbitType
+    {
+        Circular,
+        Elliptic,
+        Parabolic,
+        Hyperbolic,
+        Degenerate,
+    };
+    OrbitType orbitType() const { return orbitType_; }
 
 private:
     GravitationalParam mu_;
     qty::Second t0_;
     coordinates::Cartesian coord0_;
     OrbitalElements oe_;
+    OrbitType orbitType_;
     std::shared_ptr<CenterOfMass> parent_;
 };
 
