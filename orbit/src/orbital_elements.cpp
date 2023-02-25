@@ -1,6 +1,5 @@
 #include <orbit/orbital_elements.h>
 
-#include "kepler.h"
 #include <math/solver/newton_raphson.h>
 
 namespace galaxias
