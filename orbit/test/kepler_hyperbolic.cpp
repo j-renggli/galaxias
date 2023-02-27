@@ -1,5 +1,7 @@
 #include "../src/keplersolver/hyperbolic.h"
 
+#include "utils/kepler_checks.h"
+
 #include <catch2/catch.hpp>
 
 using namespace galaxias;
@@ -24,25 +26,27 @@ TEST_CASE("Hyperbolic construction")
 
     const double root = solver->solveForInternal(time1);
     const double guess = solver->initialGuess();
-    CHECK(guess == Approx(0.0000016096));
-    CHECK(solver->f(guess) == Approx(400.7671433214));
-    CHECK(solver->df(guess) == Approx(1800030846.725025177));
+    CHECK(guess == Approx(2.08637e-06));
+    CHECK(solver->f(guess) == Approx(365.7294519162));
+    CHECK(solver->df(guess) == Approx(-2089864116.1965370178));
 
-    CHECK(1e6 * root == Approx(-3.9959434616));
-    CHECK(solver->f(root) == Approx(-4581.6122581557));
-    CHECK(solver->df(root) == Approx(-52377053818.5091247559));
+    CHECK(1e6 * root == Approx(1.990746694)); // 1.9928
+    CHECK(solver->f(root) == Approx(-7.7968647295));
+    CHECK(solver->df(root) == Approx(-1728794068.021689415));
 
     const auto factors = solver->factorsAt(guess);
     CHECK(factors.f == Approx(0.9999993621));
-    CHECK(factors.g == Approx(4000.7655449367));
-    CHECK(1e6 * factors.df == Approx(-0.0005315463));
+    CHECK(factors.g == Approx(3965.727039547));
+    CHECK(1e6 * factors.df == Approx(0.0007563844));
     CHECK(factors.dg == Approx(0.9999998724));
+    CHECK(factors.f * factors.dg - factors.df * factors.g == Approx(1.));
 
     const auto rootFactors = solver->factorsAt(root);
-    CHECK(rootFactors.f == Approx(0.9999994355));
-    CHECK(rootFactors.g == Approx(-981.5998316672));
-    CHECK(1e6 * rootFactors.df == Approx(-0.0002068405));
-    CHECK(rootFactors.dg == Approx(0.9999998777));
+    CHECK(rootFactors.f == Approx(0.999999));
+    CHECK(rootFactors.g == Approx(3592.2009099034));
+    CHECK(1e9 * rootFactors.df == Approx(0.828238));
+    CHECK(rootFactors.dg == Approx(1.));
+    CHECK(rootFactors.f * rootFactors.dg - rootFactors.df * rootFactors.g == Approx(1.));
 }
 
 TEST_CASE("Hyperbolic orbit")
@@ -64,90 +68,92 @@ TEST_CASE("Hyperbolic orbit")
         200.,
         250.,
     };
-    const std::vector<double> guess = {
-        -3.55786e-07,
-        -2.87324e-07,
-        -2.2302e-07,
-        -1.62486e-07,
-        -1.05355e-07,
-        -5.1293e-08,
-        1.48231e-21,
-        4.87904e-08,
-        9.53134e-08,
-        1.39776e-07,
-        1.82361e-07,
-        2.2323e-07,
+
+    test::Results expected;
+    expected.guess = {
+        -2.95691e-07,
+        -2.47474e-07,
+        -1.98693e-07,
+        -1.49444e-07,
+        -9.98342e-08,
+        -4.99792e-08,
+        0.,
+        4.99792e-8,
+        9.98342e-8,
+        1.49444e-7,
+        1.98693e-7,
+        2.47474e-7,
 
     };
-    const std::vector<double> s = {
-        -3.56873e-07,
-        -2.87726e-07,
-        -2.23152e-07,
-        -1.6252e-07,
-        -1.0536e-07,
-        -5.12933e-08,
-        -1.1817e-27,
-        4.87901e-08,
-        9.53101e-08,
-        1.39762e-07,
-        1.8232e-07,
-        2.2314e-07,
+    expected.s = {
+        -2.95673e-07,
+        -2.47466e-07,
+        -1.9869e-07,
+        -1.49443e-07,
+        -9.98341e-08,
+        -4.99792e-08,
+        0.,
+        4.99792e-8,
+        9.98341e-8,
+        1.49443e-7,
+        1.9869e-7,
+        2.47466e-7,
     };
-    const std::vector<double> x = {
-        -25.6243,
-        -16.6083,
-        -9.96501,
-        -5.27559,
-        -2.21445,
-        -0.524474,
+    expected.x = {
+        -17.5506,
+        -12.2675,
+        -7.89384,
+        -4.45931,
+        -1.98804,
+        -0.49794,
         0,
-        -0.474524,
-        -1.81182,
-        -3.89935,
-        -6.64334,
-        -9.96501,
+        -0.49794,
+        -1.98804,
+        -4.45931,
+        -7.89384,
+        -12.2675,
     };
-    const std::vector<double> y = {
-        -3.00138e+08,
-        -2.50033e+08,
-        -2.00006e+08,
-        -1.50001e+08,
+    expected.y = {
+        -3e+08,
+        -2.5e+08,
+        -2e+08,
+        -1.5e+08,
         -1e+08,
         -5e+07,
-        -1.1817e-12,
-        5e+07,
-        9.99999e+07,
-        1.5e+08,
-        1.99998e+08,
-        2.49995e+08,
+        0,
+        5e7,
+        1e8,
+        1.5e8,
+        2e8,
+        2.5e8,
     };
-    const std::vector<double> vx = {
-        0.25438,
-        0.174431,
-        0.119586,
-        0.0790088,
-        0.0473338,
-        0.0215908,
-        4.71025e-22,
-        -0.0185711,
-        -0.0348775,
-        -0.0494417,
-        -0.0626368,
-        -0.0747365,
+    expected.vx = {
+        0.125087721,
+        0.1028142793,
+        0.0813306869,
+        0.0604664813,
+        0.0400598128,
+        0.0199549343,
+        0.0,
+        -0.0199549343,
+        -0.0400598128,
+        -0.0604664813,
+        -0.0813306869,
+        -0.1028142793,
     };
-    const std::vector<double> vy = {
-        -0.0366544,
-        -0.0221523,
-        -0.0124573,
-        -0.00620666,
-        -0.0024605,
-        -0.000552077,
-        0.,
-        -0.000451927,
-        -0.00164711,
-        -0.00339073,
-        -0.00553605,
-        -0.00797177,
+    expected.vy = {
+        -0.0183589656,
+        -0.0126570065,
+        -0.0080533188,
+        -0.0045097562,
+        -0.0019980065,
+        -0.0004985615,
+        0.0,
+        -0.0004985615,
+        -0.0019980065,
+        -0.0045097562,
+        -0.0080533188,
+        -0.0126570065,
     };
 
     auto solver = UniversalKeplerSolver::create(com);
@@ -155,20 +161,5 @@ TEST_CASE("Hyperbolic orbit")
     const auto c0 = com.initialCoordinates();
     const double h0 = c0.position().cross(c0.velocity())[2].value();
 
-    for (size_t i = 0; i < t.size(); ++i)
-    {
-        INFO(i << ": " << t[i]);
-        CHECK(solver->solveForInternal(t[i]) == Approx(s[i]));
-        CHECK(solver->initialGuess() == Approx(guess[i]));
-        const auto coords = solver->coordinatesAt(t[i]);
-        CHECK(coords.position()[0].value() == Approx(x[i] + com.initialPosition()[0].value()));
-        CHECK(coords.position()[1].value() == Approx(y[i]));
-        CHECK(coords.position()[2].value() == 0.);
-        CHECK(coords.velocity()[0].value() == Approx(vx[i]));
-        CHECK(coords.velocity()[1].value() == Approx(vy[i] + com.initialVelocity()[1].value()));
-        CHECK(coords.velocity()[2].value() == 0.);
-
-        // Ensure conservation of energy
-        CHECK(coords.position().cross(coords.velocity())[2].value() == Approx(h0));
-    }
+    test::Results().computeAndCheck(*solver, t, expected, h0, com.initialCoordinates());
 }

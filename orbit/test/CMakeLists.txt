@@ -8,6 +8,8 @@ set(library_src
     kepler_hyperbolic.cpp
     kepler_parabolic.cpp
     position.cpp
+
+    utils/kepler_checks.h
 )
 
 add_executable(${test_name} ${library_src})

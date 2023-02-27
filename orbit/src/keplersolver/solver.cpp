@@ -15,7 +15,7 @@ namespace orbit
 UniversalKeplerSolver::UniversalKeplerSolver(const CenterOfMass& com)
     : com_{com}
     , r0_{com.initialPosition().norm().value()}
-    , v0_{com.initialVelocity().norm().value()}
+    , rdotv_{com.initialPosition().dot(com.initialVelocity()).value()}
     , k_{com.mu().value()}
     , beta_{k_ * com.orbitalElements().alpha_.value()}
     , sb_{sqrt(std::abs(beta_))}
@@ -46,11 +46,11 @@ void UniversalKeplerSolver::setTargetTime(const qty::Second& targetTime) { h_ = 
 double UniversalKeplerSolver::solveForInternal(const qty::Second& targetTime)
 {
     setTargetTime(targetTime);
-    guess_ = math::firstRealCubicRoot((k_ - beta_ * r0_) / 6., r0_ * v0_ * 0.5, r0_, -h_);
+    guess_ = math::firstRealCubicRoot((k_ - beta_ * r0_) / 6., rdotv_ * 0.5, r0_, -h_);
 
     try
     {
-        return math::solver::NewtonRaphson::findRoot(*this, guess_);
+        return math::solver::NewtonRaphson::findRoot(*this, guess_, 1e-9 * std::abs(guess_));
     }
     catch (const math::solver::ConvergenceException&)
     {
@@ -60,8 +60,8 @@ double UniversalKeplerSolver::solveForInternal(const qty::Second& targetTime)
 
 coordinates::Cartesian UniversalKeplerSolver::coordinatesAt(const qty::Second& targetTime)
 {
-    const double s = solveForInternal(targetTime);
-    const Factors factors = factorsAt(s);
+    root_ = solveForInternal(targetTime);
+    const Factors factors = factorsAt(root_);
 
     return coordinates::Cartesian{com_.initialPosition() * factors.f + com_.initialVelocity() * qty::Second{factors.g},
                                   com_.initialPosition() * qty::Frequency{factors.df} +

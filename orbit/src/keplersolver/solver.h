@@ -32,7 +32,9 @@ public:
     /// Get the value of s for the provided target time
     double solveForInternal(const qty::Second& targetTime);
 
+    /// Once solved, we can retrieve useful values for validation
     double initialGuess() const { return guess_; }
+    double computedS() const { return root_; }
 
     /// Get the factors at the given s
     struct Factors
@@ -54,13 +56,14 @@ private:
 protected:
     const CenterOfMass& com_;
     double r0_;
-    double v0_;
+    double rdotv_;
     double k_;
     double beta_;
     double sb_;
     double t0_;
     double h_;
     double guess_;
+    double root_;
 };
 
 } // namespace orbit
