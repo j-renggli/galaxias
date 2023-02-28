@@ -4,6 +4,7 @@ set(test_name test_${library_name})
 
 set(library_src
     centerofmass.cpp
+    gauss_problem.cpp
     kepler_elliptic.cpp
     kepler_hyperbolic.cpp
     kepler_parabolic.cpp

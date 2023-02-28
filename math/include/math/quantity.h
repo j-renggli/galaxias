@@ -47,6 +47,7 @@ struct Quantity
     Quantity operator+(const Quantity& rhs) const { return Quantity(val_ + rhs.value()); }
     Quantity operator-(const Quantity& rhs) const { return Quantity(val_ - rhs.value()); }
     Quantity operator*(double scalar) const { return Quantity(val_ * scalar); }
+    Quantity operator/(double scalar) const { return Quantity(val_ / scalar); }
 
     /// Multiply with another quantity
     template <class T2, class U2, class Out = typename unit::MultiplyUnit<U, U2>::value_type>

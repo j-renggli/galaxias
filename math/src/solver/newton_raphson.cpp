@@ -40,7 +40,7 @@ double NewtonRaphson::findRoot(const IFunction& fct, double x, const double tole
         x = x1;
     }
 
-    throw ConvergenceException(max /*"Failed to converge after " + std::to_string(max) + " iterations"*/);
+    throw ConvergenceException(max);
 }
 
 } // namespace solver
