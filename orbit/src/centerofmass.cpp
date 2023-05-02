@@ -1,5 +1,7 @@
 #include <orbit/centerofmass.h>
 
+#include "keplersolver/solver.h"
+
 namespace galaxias
 {
 namespace orbit
@@ -30,7 +32,10 @@ deduceElements(const GravitationalParam& centralMu, const Cartesian::Position& r
         // Degenerate conic that is either a point or a line
         // TODO: Apply perturbation so as to fall back to hyperbolic? Use e = inf, a = -inf?
         // NO, h = 0, e = 1  is what a point / straight line must be!
-        throw std::runtime_error("Linear case not implemented");
+        if (r0.squaredNorm().value() + v0.squaredNorm().value() > 0.)
+        {
+            throw std::runtime_error("Linear case not implemented");
+        }
         return OrbitalElements{1., 0., 0., 0., 0.};
     }
 
@@ -105,7 +110,13 @@ CenterOfMass::CenterOfMass(const GravitationalParam& mu,
     {
         orbitType_ = OrbitType::Parabolic;
     }
+
+    solver_ = UniversalKeplerSolver::create(*this);
 }
+
+CenterOfMass::~CenterOfMass() = default;
+
+coordinates::Cartesian CenterOfMass::coordinatesAt(const qty::Second& t) const { return solver_->coordinatesAt(t); }
 
 math::Range<double> CenterOfMass::orbitalPeriod() const
 {

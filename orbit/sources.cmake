@@ -12,6 +12,7 @@ set(object_library_src
     src/orbital_elements.cpp
     src/position.cpp
 
+    src/keplersolver/degenerate.h
     src/keplersolver/elliptic.h
     src/keplersolver/hyperbolic.h
     src/keplersolver/parabolic.h

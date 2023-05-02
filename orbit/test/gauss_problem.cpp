@@ -37,6 +37,7 @@ protected:
     /// Variables
     qty::Second target_{std::numeric_limits<double>::quiet_NaN()};
     qty::Metre p_{0.};
+    qty::PerMetre alpha_{0.};
     qty::Unitless f_{0.};
     qty::Second g_{0.};
     qty::Frequency df_{0.};
@@ -74,6 +75,8 @@ public:
         }
     }
 
+    double minP() const { return p1_.value(); }
+    double limitP() const { return p2_.value(); }
     double initialGuess() const { return (p1_ + p2_).value() * 0.5; }
 
     void setTargetTime(const qty::Second& targetTime) { target_ = targetTime; }
@@ -95,6 +98,8 @@ public:
 
         const qty::PerMetre alpha = ((m_ * 2. - l2_) * p2 + k_ * l_ * p_ * 2. - k2_) / (m_ * k_ * p_);
         const qty::Unitless cDX = one - alpha * r1_ * (one - f_); // Either cosDE or coshDE
+
+        alpha_ = alpha;
 
         if (alpha >= 0.)
         {
@@ -164,8 +169,9 @@ public:
     GaussProblemTest(const GravitationalParam& mu,
                      const coordinates::Cartesian::Position& pos1,
                      const coordinates::Cartesian::Position& pos2,
-                     const Expectation& expected)
-        : GaussProblem{mu, pos1, pos2}
+                     const Expectation& expected,
+                     bool longWay = false)
+        : GaussProblem{mu, pos1, pos2, longWay}
     {
         CHECK(r1_.value() == Approx(expected.r1));
         CHECK(r2_.value() == Approx(expected.r2));
@@ -176,6 +182,8 @@ public:
         CHECK(p1_.value() == Approx(expected.p1));
         CHECK(p2_.value() == Approx(expected.p2));
     }
+
+    double alpha() const { return alpha_.value(); }
 };
 
 TEST_CASE("Gauss problem 1")

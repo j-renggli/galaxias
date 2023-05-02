@@ -1,5 +1,6 @@
 #include "solver.h"
 
+#include "degenerate.h"
 #include "elliptic.h"
 #include "hyperbolic.h"
 #include "parabolic.h"
@@ -36,8 +37,15 @@ std::unique_ptr<UniversalKeplerSolver> UniversalKeplerSolver::create(const Cente
     case CenterOfMass::OrbitType::Hyperbolic:
         return std::make_unique<HyperbolicKeplerSolver>(com);
     case CenterOfMass::OrbitType::Degenerate:
+    {
+        if (com.initialPosition().squaredNorm().value() + com.initialVelocity().squaredNorm().value() == 0.)
+        {
+            return std::make_unique<ZeroKeplerSolver>(com);
+        }
+
         // TODO: Implement!
         throw std::logic_error("Degenerate case not solvable yet");
+    }
     };
 }
 
