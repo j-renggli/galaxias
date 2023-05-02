@@ -18,6 +18,9 @@ public:
     Mersenne(uint64_t seed);
     virtual ~Mersenne() = default;
 
+    /// Return a value in range [0, max)
+    uint64_t uniform();
+    /// Return a value within the given half-open range
     double uniform(const Range<double>& range);
 
 private:

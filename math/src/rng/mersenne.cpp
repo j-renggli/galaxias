@@ -17,6 +17,8 @@ Mersenne::Mersenne(uint64_t seed)
 {
 }
 
+uint64_t Mersenne::uniform() { return mt_(); }
+
 double Mersenne::uniform(const Range<double>& range)
 {
     return std::uniform_real_distribution<>(range.low(), range.high())(mt_);

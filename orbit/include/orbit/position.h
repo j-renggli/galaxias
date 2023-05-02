@@ -29,6 +29,8 @@ public:
     const Velocity& velocity() const { return v_; }
     double normVelocity() const { return v_.value().norm(); }
 
+    friend std::ostream& operator<<(std::ostream& out, const Cartesian& cartesian);
+
 private:
     Position r_;
     Velocity v_;
@@ -40,6 +42,25 @@ class StelloCentric : public Cartesian
 
 class Perifocal : public Cartesian
 {
+};
+
+class GalactoCentric
+{
+public:
+    GalactoCentric(const math::quantity::Radian& angle,
+                   const math::quantity::Metre& radius,
+                   const math::quantity::Metre& height);
+
+    const math::quantity::Radian& angle() const { return angle_; }
+    const math::quantity::Metre& radius() const { return radius_; }
+    const math::quantity::Metre& height() const { return height_; }
+
+    friend std::ostream& operator<<(std::ostream& out, const GalactoCentric& cartesian);
+
+private:
+    const math::quantity::Radian angle_;
+    const math::quantity::Metre radius_;
+    const math::quantity::Metre height_;
 };
 
 } // namespace coordinates
