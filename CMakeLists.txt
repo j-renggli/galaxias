@@ -21,6 +21,7 @@ find_package(Eigen3)
 add_subdirectory(core)
 add_subdirectory(math)
 add_subdirectory(orbit)
+add_subdirectory(system)
 
 set(library_src
     main.cpp
@@ -34,6 +35,7 @@ add_executable(galaxias ${library_src})
 target_link_libraries(galaxias
     math
     orbit
+    system
 )
 
 source_group("res" REGULAR_EXPRESSION ".*")
