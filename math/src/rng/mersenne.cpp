@@ -17,6 +17,11 @@ Mersenne::Mersenne(uint64_t seed)
 {
 }
 
+Mersenne::Mersenne(Mersenne& reference, uint64_t seedMask)
+    : mt_{reference.uniform() ^ seedMask}
+{
+}
+
 uint64_t Mersenne::uniform() { return mt_(); }
 
 double Mersenne::uniform(const Range<double>& range)
