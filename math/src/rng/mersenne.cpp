@@ -1,4 +1,4 @@
-#include <math/rng/mersenne.h>
+#include <math/rng/prng.h>
 
 namespace galaxias
 {
@@ -7,26 +7,10 @@ namespace math
 namespace rng
 {
 
-Mersenne::Mersenne()
-    : mt_{std::random_device{}()}
+template <>
+Mersenne::PRNG(uint64_t seed)
+    : generator_{seed}
 {
-}
-
-Mersenne::Mersenne(uint64_t seed)
-    : mt_{seed}
-{
-}
-
-Mersenne::Mersenne(Mersenne& reference, uint64_t seedMask)
-    : mt_{reference.uniform() ^ seedMask}
-{
-}
-
-uint64_t Mersenne::uniform() { return mt_(); }
-
-double Mersenne::uniform(const Range<double>& range)
-{
-    return std::uniform_real_distribution<>(range.low(), range.high())(mt_);
 }
 
 } // namespace rng

@@ -1,8 +1,10 @@
-#include <math/rng/mersenne.h>
+#include <math/rng/prng.h>
 
 #include <math/range.h>
 
 #include <catch2/catch.hpp>
+
+#include <deque>
 
 using namespace galaxias;
 using namespace math;
@@ -11,9 +13,10 @@ using namespace rng;
 namespace
 {
 constexpr Range<double> range(10., 20.);
-}
 
-TEST_CASE("Rng with arbitrary seed")
+} // namespace
+
+TEST_CASE("Mersenne with arbitrary seed")
 {
     Mersenne m{};
 
@@ -22,7 +25,7 @@ TEST_CASE("Rng with arbitrary seed")
     CHECK(x <= 20.);
 }
 
-TEST_CASE("Rng with seed")
+TEST_CASE("Mersenne with seed")
 {
     Mersenne m{42};
 
@@ -31,7 +34,7 @@ TEST_CASE("Rng with seed")
     CHECK(m.uniform() == 11788048577503494824ull);
 }
 
-TEST_CASE("Rng from existing and mask")
+TEST_CASE("Mersenne from existing and mask")
 {
     constexpr int64_t mask = 0x7777777777777777;
     Mersenne m{42};

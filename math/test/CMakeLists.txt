@@ -4,6 +4,8 @@ set(test_name test_${library_name})
 
 set(library_src
     rng_mersenne.cpp
+    rng_realise.cpp
+    rng_xoshiro.cpp
 
     solver_bisection.cpp
     solver_brent.cpp
