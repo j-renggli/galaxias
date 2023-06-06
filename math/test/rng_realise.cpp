@@ -1,3 +1,4 @@
+#include <math/rng/fixed_proba.h>
 #include <math/rng/prng.h>
 
 #include <math/range.h>
@@ -15,55 +16,6 @@ namespace
 
 std::vector<float> quartiles{0.25, 0.25, 0.25, 0.25};
 
-template <class T>
-struct FixThenHalve
-{
-    using value_type = T;
-    // difference_type, reference, pointer, and iterator_category
-
-    FixThenHalve()
-        : total_{0}
-    {
-    }
-    FixThenHalve(std::initializer_list<T> init)
-        : fix_{init}
-        , total_{1}
-    {
-    }
-    FixThenHalve(const FixThenHalve& rhs) = default;
-    FixThenHalve(FixThenHalve&& rhs) noexcept = default;
-    ~FixThenHalve() = default;
-
-    FixThenHalve& operator=(const FixThenHalve& rhs) = default;
-    FixThenHalve& operator=(FixThenHalve&& rhs) noexcept = default;
-
-    bool operator!=(const FixThenHalve& rhs) const { return fix_ != rhs.fix_ || total_ != rhs.total_; }
-    FixThenHalve& operator++()
-    {
-        if (fix_.empty())
-        {
-            total_ *= 0.5;
-        }
-        else
-        {
-            total_ -= fix_.front();
-            fix_.pop_front();
-        }
-        return *this;
-    }
-    FixThenHalve operator++(int)
-    {
-        FixThenHalve copy{*this};
-        ++(*this);
-        return copy;
-    }
-    T operator*() { return fix_.empty() ? (total_ * 0.5) : fix_.front(); }
-
-private:
-    std::deque<T> fix_;
-    T total_;
-};
-
 } // namespace
 
 TEST_CASE("Realize function for quartiles")
@@ -78,6 +30,18 @@ TEST_CASE("Realize function for quartiles")
     CHECK(detail::realise(quartiles.begin(), quartiles.end(), 0.75) == 3);
     CHECK(detail::realise(quartiles.begin(), quartiles.end(), 0.9) == 3);
     CHECK_THROWS_AS(detail::realise(quartiles.begin(), quartiles.end(), 1.), std::out_of_range);
+
+    Random rng(1);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 1);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 1);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 0);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 1);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 1);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 1);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 3);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 0);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 2);
+    CHECK(rng.realisation(quartiles.begin(), quartiles.end()) == 2);
 }
 
 TEST_CASE("Realize function for fixed probabilities")

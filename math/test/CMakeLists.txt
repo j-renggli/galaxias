@@ -13,6 +13,7 @@ set(library_src
 
     analytic_roots.cpp
     bounded_quantity.cpp
+    derived_quantity.cpp
     quantity.cpp
     range.cpp
 

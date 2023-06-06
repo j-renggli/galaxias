@@ -4,11 +4,13 @@ set(objects_name ${library_name}_object)
 set(library_src
     include/${library_name}/analytic_roots.h
     include/${library_name}/bounded_quantity.h
+    include/${library_name}/derived_quantity.h
     include/${library_name}/quantity.h
     include/${library_name}/range.h
     include/${library_name}/range.inl
     include/${library_name}/unit.h
 
+    include/${library_name}/rng/fixed_proba.h
     include/${library_name}/rng/prng.h
 
     include/${library_name}/solver/bisection.h

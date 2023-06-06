@@ -23,6 +23,15 @@ public:
                                      " >= " + std::to_string(high));
         }
     }
+    Range(const Range&) = default;
+    Range(Range&&) noexcept = default;
+    ~Range() = default;
+
+    Range& operator=(const Range&) = default;
+    Range& operator=(Range&&) noexcept = default;
+
+    bool operator==(const Range& rhs) const { return lo_ == rhs.lo_ && hi_ == rhs.hi_; }
+    bool operator!=(const Range& rhs) const { return !operator==(rhs); }
 
     const T& low() const noexcept { return lo_; }
     const T& high() const noexcept { return hi_; }
