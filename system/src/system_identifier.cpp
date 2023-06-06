@@ -1,6 +1,6 @@
 #include <system/system_identifier.h>
 
-#include "galactic_quantity.h"
+#include "quantity/galactic.h"
 #include <math/bounded_quantity.h>
 
 namespace galaxias

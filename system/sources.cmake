@@ -6,8 +6,10 @@ set(library_src
 )
 
 set(object_library_src
-    src/galactic_quantity.h
     src/system_identifier.cpp
+
+    src/quantity/galactic.h
+    src/quantity/solar.h
 )
 
 # Trick to show the file sources.cmake in the IDE

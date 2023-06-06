@@ -1,6 +1,6 @@
 #include <system/system.h>
 
-#include "../src/galactic_quantity.h"
+#include "../src/quantity/galactic.h"
 
 #include <catch2/catch.hpp>
 

@@ -3,6 +3,7 @@ get_filename_component(library_name ${library_name} NAME)
 set(test_name test_${library_name})
 
 set(library_src
+    quantities.cpp
     system_identifier.cpp
 )
 
