@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <stdexcept>
 
 namespace galaxias
@@ -45,6 +46,10 @@ public:
     T modulo(const T& value) const;
 
     static Range make(const T& a, const T& b) { return Range{std::min(a, b), std::max(a, b)}; }
+
+    static constexpr Range<T> positive() { return Range<T>{0., std::numeric_limits<double>::max()}; }
+    static constexpr Range<T> negative() { return Range<T>{-std::numeric_limits<double>::max(), 0.}; }
+    static constexpr Range<T> radians() { return Range<T>{0., 2. * M_PI}; }
 
 private:
     T lo_;

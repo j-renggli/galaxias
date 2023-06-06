@@ -7,27 +7,16 @@ namespace galaxias
 namespace orbit
 {
 
-namespace
-{
-
-constexpr double pi{M_PI};
-constexpr double two_pi{2. * pi};
-constexpr double max{std::numeric_limits<double>::max()};
-constexpr math::Range range_positive{0., max};
-constexpr math::Range range_0_2pi{0., two_pi};
-
-} // namespace
-
 OrbitalElements::OrbitalElements(const qty::Unitless& eccentricity,
                                  const qty::PerMetre& alpha,
                                  const qty::Radian& inclination,
                                  const qty::Radian& longitude,
                                  const qty::Radian& periapsis)
-    : eccentricity_{eccentricity, range_positive}
+    : eccentricity_{eccentricity, math::Range<double>::positive()}
     , alpha_{alpha}
-    , inclination_{qty::BoundedRadian::fromModulo(inclination, {0., pi})}
-    , longitude_{qty::BoundedRadian::fromModulo(longitude, range_0_2pi)}
-    , periapsis_{qty::BoundedRadian::fromModulo(periapsis, range_0_2pi)}
+    , inclination_{qty::BoundedRadian::fromModulo(inclination, math::Range<double>{0., M_PI})}
+    , longitude_{qty::BoundedRadian::fromModulo(longitude, math::Range<double>::radians())}
+    , periapsis_{qty::BoundedRadian::fromModulo(periapsis, math::Range<double>::radians())}
 {
 }
 

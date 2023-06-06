@@ -10,8 +10,6 @@ namespace
 {
 constexpr double min{-std::numeric_limits<double>::max()};
 constexpr double max{std::numeric_limits<double>::max()};
-constexpr Range<double> positive{0., max};
-constexpr Range<double> negative{min, 0.};
 constexpr Range<double> pm_one{-1., 1.};
 } // namespace
 
@@ -28,22 +26,22 @@ TEST_CASE("No bounds")
 
 TEST_CASE("Minimum")
 {
-    const BoundedUnitless x{0., positive};
+    const BoundedUnitless x{0., Range<double>::positive()};
     CHECK(x.range().low() == 0.);
     CHECK(x.range().high() == max);
 
-    CHECK_THROWS_AS(BoundedUnitless(-1., positive), std::runtime_error);
-    CHECK_NOTHROW(BoundedUnitless(max, positive));
+    CHECK_THROWS_AS(BoundedUnitless(-1., Range<double>::positive()), std::runtime_error);
+    CHECK_NOTHROW(BoundedUnitless(max, Range<double>::positive()));
 }
 
 TEST_CASE("Maximum")
 {
-    const BoundedUnitless x{0., negative};
+    const BoundedUnitless x{0., Range<double>::negative()};
     CHECK(x.range().low() == min);
     CHECK(x.range().high() == 0.);
 
-    CHECK_NOTHROW(BoundedUnitless(min, negative));
-    CHECK_THROWS_AS(BoundedUnitless(1., negative), std::runtime_error);
+    CHECK_NOTHROW(BoundedUnitless(min, Range<double>::negative()));
+    CHECK_THROWS_AS(BoundedUnitless(1., Range<double>::negative()), std::runtime_error);
 }
 
 TEST_CASE("Both")
