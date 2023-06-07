@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math/rng/mersenne.h>
+#include <math/rng/prng.h>
 #include <orbit/position.h>
 
 #include <cstdint>
@@ -22,14 +22,14 @@ public:
     uint32_t radius() const { return radius_; }
 
     /// Retrieve the underlying dice for this system. Careful in order of call!
-    const math::rng::Mersenne& dice() const { return dice_; }
+    math::rng::Random& dice() { return dice_; }
     const orbit::coordinates::GalactoCentric& coordinates() const;
 
 private:
     uint32_t angle_;
     uint32_t radius_;
 
-    math::rng::Mersenne dice_;
+    math::rng::Random dice_;
     orbit::coordinates::GalactoCentric coords_;
 };
 

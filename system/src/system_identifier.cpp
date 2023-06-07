@@ -16,7 +16,7 @@ namespace
 
 constexpr math::Range<double> range01{0., 1.};
 constexpr math::Range<double> rangePM1{-1., 1.};
-constexpr math::Range<double> rangeRadian{0., 2. * M_PI};
+constexpr auto rangeRadian{math::Range<double>::radians()};
 
 constexpr uint64_t identifierShift{18};
 constexpr uint32_t identifierMask = 0x3FFFF;
@@ -28,22 +28,22 @@ uint64_t valueFrom(uint32_t r, uint32_t phi)
     return (static_cast<uint64_t>(r) << identifierShift) + static_cast<uint64_t>(phi);
 }
 
-math::rng::Mersenne makeSystemDice(uint32_t r, uint32_t phi)
+math::rng::Random makeSystemDice(uint32_t r, uint32_t phi)
 {
     /// First prepare a die. This is a very important step that influences the whole galaxy !
     /// Do not modify unless aware of the consequences !!! Make sure it works !!!
     const uint64_t mult = r * phi;
     const uint64_t x_or = r ^ phi;
-    return math::rng::Mersenne{(mult * x_or) ^ valueFrom(r, phi)};
+    return math::rng::Random{(mult * x_or) ^ valueFrom(r, phi)};
 }
 
-orbit::coordinates::GalactoCentric makeCoordinates(math::rng::Mersenne& dice, uint32_t rawAngle, uint32_t rawRadius)
+orbit::coordinates::GalactoCentric makeCoordinates(math::rng::Random& dice, uint32_t rawAngle, uint32_t rawRadius)
 {
     /// Some constants: (angle, radius) is the "raw" galactic coordinates as defined by the identifier where
     ///                 angle  = discrete pseudo-angle in range [0, 262143)
     ///                 radius = discrete pseudo-distance in range [0, 262143)
     /// From this we construct the "real" coordinates using some pseudo-randomness
-    math::rng::Mersenne coordsDice{dice, coordsMask};
+    math::rng::Random coordsDice{dice, coordsMask};
 
     // Real angle is between phi and phi + 1, then converted to radians
     const auto angle = qty::BoundedRadian::fromModulo(
