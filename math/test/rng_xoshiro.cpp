@@ -52,6 +52,9 @@ TEST_CASE("Xoshiro with seed")
     CHECK(m.uniform() == 1551269651652525133ull);
     CHECK(m.uniform() == 11780291535123546661ull);
     CHECK(m.uniform() == 12311635331428359044ull);
+    CHECK(m.gaussian<double>() == Approx(-0.8325193529));
+    CHECK(m.gaussian(10.) == Approx(9.7031224002));
+    CHECK(m.gaussian(-5., 0.3) == Approx(-5.1379749829));
 }
 
 TEST_CASE("Xoshiro from existing and mask")

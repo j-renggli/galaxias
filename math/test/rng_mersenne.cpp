@@ -32,6 +32,9 @@ TEST_CASE("Mersenne with seed")
     // m produces deterministic outputs
     CHECK(m.uniform(range) == Approx(17.5515553295));
     CHECK(m.uniform() == 11788048577503494824ull);
+    CHECK(m.gaussian<double>() == Approx(-0.5740948067));
+    CHECK(m.gaussian(10.) == Approx(8.0933146552));
+    CHECK(m.gaussian(-5., 0.3) == Approx(-5.2172368796));
 }
 
 TEST_CASE("Mersenne from existing and mask")

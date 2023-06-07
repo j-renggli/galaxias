@@ -49,6 +49,7 @@ public:
 
     static constexpr Range<T> positive() { return Range<T>{0., std::numeric_limits<double>::max()}; }
     static constexpr Range<T> negative() { return Range<T>{-std::numeric_limits<double>::max(), 0.}; }
+    static constexpr Range<T> zeroOne() { return Range<T>{0., 1.}; }
     static constexpr Range<T> radians() { return Range<T>{0., 2. * M_PI}; }
 
 private:

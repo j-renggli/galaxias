@@ -69,12 +69,19 @@ public:
 
     /// Return a value in range [0, max)
     uint64_t uniform() { return generator_(); }
-
     /// Return a value within the given half-open range
     template <class R>
     R uniform(const Range<R>& range)
     {
-        return std::uniform_real_distribution<>(range.low(), range.high())(generator_);
+        return std::uniform_real_distribution<>{static_cast<double>(range.low()),
+                                                static_cast<double>(range.high())}(generator_);
+    }
+
+    /// Return a value following a normal distribution
+    template <class R>
+    R gaussian(const R& mean = 0., const R& stddev = 1.)
+    {
+        return std::normal_distribution<>{mean, stddev}(generator_);
     }
 
     /// Given a discrete probability distribution through iterator, returns one realisation
