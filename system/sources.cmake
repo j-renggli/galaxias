@@ -3,10 +3,12 @@ set(objects_name ${library_name}_object)
 
 set(library_src
     include/${library_name}/body.h
+    include/${library_name}/system.h
     include/${library_name}/system_identifier.h
 )
 
 set(object_library_src
+    src/system.cpp
     src/system_identifier.cpp
 
     src/bodies/star.cpp
