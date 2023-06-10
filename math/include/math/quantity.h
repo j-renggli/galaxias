@@ -119,8 +119,12 @@ using PerMetre = Quantity<double, unit::PerMetre>;
 // Mass
 using Kilogram = Quantity<double, unit::Kilogram>;
 
+// Temperature
+using Kelvin = Quantity<double, unit::Kelvin>;
+
 // Composite
 using Velocity = Quantity<double, unit::Velocity>;
+using Watt = Quantity<double, unit::Watt>;
 
 } // namespace quantity
 } // namespace math

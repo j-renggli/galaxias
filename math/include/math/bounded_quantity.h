@@ -63,8 +63,12 @@ using BoundedMetre = BoundedQuantity<double, unit::Metre>;
 // Mass
 using BoundedKilogram = BoundedQuantity<double, unit::Kilogram>;
 
+// Temperature
+using BoundedKelvin = BoundedQuantity<double, unit::Kelvin>;
+
 // Composite
 using BoundedVelocity = BoundedQuantity<double, unit::Velocity>;
+using BoundedWatt = BoundedQuantity<double, unit::Watt>;
 
 } // namespace quantity
 } // namespace math

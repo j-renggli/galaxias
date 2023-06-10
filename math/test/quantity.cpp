@@ -34,30 +34,86 @@ void checkUnit(const T&, const std::array<double, 8>& expectedRatios)
 
 TEST_CASE("Unitless")
 {
-    const Unitless x{pi};
-    CHECK(x.value() == pi);
-    checkUnit(x, {{0., 0., 0., 0., 0., 0., 0., 0.}});
+    {
+        INFO("Unitless");
+        const Unitless x{pi};
+        CHECK(x.value() == pi);
+        checkUnit(x, {{0., 0., 0., 0., 0., 0., 0., 0.}});
+    }
+    {
+        INFO("rad");
+        const Radian rad{pi};
+        CHECK(rad.value() == pi);
+        checkUnit(rad, {{0., 0., 0., 0., 0., 0., 0., 0.}});
+    }
 }
 
-TEST_CASE("Second")
+TEST_CASE("Time")
 {
-    const Second s{pi};
-    CHECK(s.value() == pi);
-    checkUnit(s, {{1., 0., 0., 0., 0., 0., 0., 0.}});
+    {
+        INFO("s");
+        const Second s{pi};
+        CHECK(s.value() == pi);
+        checkUnit(s, {{1., 0., 0., 0., 0., 0., 0., 0.}});
+    }
+    {
+        INFO("s-1");
+        const Frequency f{pi};
+        CHECK(f.value() == pi);
+        checkUnit(f, {{-1., 0., 0., 0., 0., 0., 0., 0.}});
+    }
 }
 
-TEST_CASE("Metre")
+TEST_CASE("Length")
 {
-    const Metre m{pi};
-    CHECK(m.value() == pi);
-    checkUnit(m, {{0., 1., 0., 0., 0., 0., 0., 0.}});
+    {
+        INFO("m");
+        const Metre m{pi};
+        CHECK(m.value() == pi);
+        checkUnit(m, {{0., 1., 0., 0., 0., 0., 0., 0.}});
+    }
+    {
+        INFO("m-1");
+        const PerMetre m{pi};
+        CHECK(m.value() == pi);
+        checkUnit(m, {{0., -1., 0., 0., 0., 0., 0., 0.}});
+    }
 }
 
-TEST_CASE("Kilogram")
+TEST_CASE("Mass")
 {
     const Kilogram kg{pi};
     CHECK(kg.value() == pi);
     checkUnit(kg, {{0., 0., 1., 0., 0., 0., 0., 0.}});
+}
+
+TEST_CASE("Temperature")
+{
+    const Kelvin k{pi};
+    CHECK(k.value() == pi);
+    checkUnit(k, {{0., 0., 0., 1., 0., 0., 0., 0.}});
+}
+
+TEST_CASE("Composite")
+{
+    {
+        INFO("m/s");
+        const Velocity v{two};
+        CHECK(v.value() == two);
+        checkUnit(v, {{-1., 1., 0., 0., 0., 0., 0., 0.}});
+    }
+    {
+        INFO("W");
+        const Watt w{two};
+        CHECK(w.value() == two);
+        checkUnit(w, {{-3., 2., 1., 0., 0., 0., 0., 0.}});
+    }
+    {
+        INFO("m*m*m/s*s");
+        auto mu = Metre{2.} * Metre{3.} * Metre{4.} / (Second{6.} * Second{2.});
+        CHECK(mu.value() == 2.);
+        checkUnit(mu, {{-2., 3., 0., 0., 0., 0., 0., 0.}});
+    }
 }
 
 TEST_CASE("Unary minus")
@@ -174,22 +230,5 @@ TEST_CASE("Root")
 
         CHECK(x.value() == 1. / two);
         checkUnit(x, {{1., -1., 0., 0., 0., 0., 0., 0.}});
-    }
-}
-
-TEST_CASE("Composite")
-{
-    {
-        INFO("m/s");
-        const Velocity v{two};
-        CHECK(v.value() == two);
-        checkUnit(v, {{-1., 1., 0., 0., 0., 0., 0., 0.}});
-    }
-
-    {
-        INFO("m*m*m/s*s");
-        auto mu = Metre{2.} * Metre{3.} * Metre{4.} / (Second{6.} * Second{2.});
-        CHECK(mu.value() == 2.);
-        checkUnit(mu, {{-2., 3., 0., 0., 0., 0., 0., 0.}});
     }
 }

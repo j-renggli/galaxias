@@ -17,6 +17,7 @@ using NegOne = std::ratio<-1>;
 using Two = std::ratio<2>;
 using NegTwo = std::ratio<-2>;
 using Three = std::ratio<3>;
+using NegThree = std::ratio<-3>;
 } // namespace ratio
 
 template <class T = ratio::Zero,
@@ -100,11 +101,15 @@ using Metre = Unit<ratio::Zero, ratio::One>;
 using PerMetre = Unit<ratio::Zero, ratio::NegOne>;
 using MetreSquared = Unit<ratio::Zero, ratio::Two>;
 
-// Weight
+// Mass
 using Kilogram = Unit<ratio::Zero, ratio::Zero, ratio::One>;
+
+// Temperature
+using Kelvin = Unit<ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero, ratio::One>;
 
 // Composite
 using Velocity = Unit<ratio::NegOne, ratio::One>;
+using Watt = Unit<ratio::NegThree, ratio::Two, ratio::One>;
 
 } // namespace unit
 } // namespace math
