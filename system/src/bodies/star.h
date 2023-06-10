@@ -28,6 +28,12 @@ private:
 
     /// Radius of the star (useful for display)
     const SolarRadius radius_;
+
+    /// Effective temperature (black body)
+    const qty::BoundedKelvin temperature_;
+
+    /// Luminosity (for absolute -> apparent magnitude)
+    const qty::BoundedWatt luminosity_;
 };
 
 } // namespace system

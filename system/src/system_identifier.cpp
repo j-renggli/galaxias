@@ -28,7 +28,7 @@ uint64_t valueFrom(uint32_t r, uint32_t phi)
     return (static_cast<uint64_t>(r) << identifierShift) + static_cast<uint64_t>(phi);
 }
 
-math::rng::Random makeSystemDice(uint32_t r, uint32_t phi)
+math::rng::Random makeSystemDice(uint64_t r, uint64_t phi)
 {
     /// First prepare a die. This is a very important step that influences the whole galaxy !
     /// Do not modify unless aware of the consequences !!! Make sure it works !!!
@@ -64,7 +64,7 @@ orbit::coordinates::GalactoCentric makeCoordinates(math::rng::Random& dice, uint
 SystemIdentifier::SystemIdentifier(uint32_t angle, uint32_t radius)
     : angle_{angle}
     , radius_{radius}
-    , dice_{makeSystemDice(angle_, radius_)}
+    , dice_{makeSystemDice(static_cast<uint64_t>(angle_), static_cast<uint64_t>(radius_))}
     , coords_{makeCoordinates(dice_, angle_, radius_)}
 {
     if ((angle_ & identifierMask) != angle_)
