@@ -11,9 +11,12 @@ set(object_library_src
     src/system.cpp
     src/system_identifier.cpp
 
+    src/bodies/planet.cpp
+    src/bodies/planet.h
     src/bodies/star.cpp
     src/bodies/star.h
 
+    src/quantity/earth.h
     src/quantity/galactic.h
     src/quantity/solar.h
 )

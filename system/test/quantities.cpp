@@ -1,3 +1,4 @@
+#include "../src/quantity/earth.h"
 #include "../src/quantity/galactic.h"
 #include "../src/quantity/solar.h"
 
@@ -41,4 +42,10 @@ TEST_CASE("Solar quantities")
 {
     checkPositiveDerivedUnit<SolarMass, math::quantity::Kilogram>("SolarMass", 1.9885e30);
     checkPositiveDerivedUnit<SolarRadius, math::quantity::Metre>("SolarRadius", 696342000.0);
+}
+
+TEST_CASE("Earth quantities")
+{
+    checkPositiveDerivedUnit<EarthMass, math::quantity::Kilogram>("EarthMass", 5.9722e24);
+    checkPositiveDerivedUnit<EarthRadius, math::quantity::Metre>("EarthRadius", 6378100);
 }
