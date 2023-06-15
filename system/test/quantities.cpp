@@ -35,7 +35,17 @@ void checkPositiveDerivedUnit(const std::string& context, const double factor)
 
 TEST_CASE("Galactic quantities")
 {
-    checkDerivedUnit<KiloLightYear, math::quantity::Metre>("KiloLightYear", 9.46073047258e+15);
+    checkDerivedUnit<Parsec, math::quantity::Metre>("Parsec", 3.0857e16);
+    checkDerivedUnit<LightYear, math::quantity::Metre>("LightYear", 9.4607e15);
+    checkDerivedUnit<KiloLightYear, math::quantity::Metre>("KiloLightYear", 9.46073047258e18);
+
+    // Check some conversions
+    const Parsec pc{1};
+    const LightYear ly{1};
+    const KiloLightYear kly{1};
+    CHECK(pc.base().value() == Approx(ly.base().value() * 3.26156));
+    CHECK(kly.base().value() == Approx(ly.base().value() * 1000.));
+    CHECK(ly.base().value() == Approx(AstronomicalUnit{1}.base().value() * 63241.));
 }
 
 TEST_CASE("Solar quantities")
@@ -48,4 +58,5 @@ TEST_CASE("Earth quantities")
 {
     checkPositiveDerivedUnit<EarthMass, math::quantity::Kilogram>("EarthMass", 5.9722e24);
     checkPositiveDerivedUnit<EarthRadius, math::quantity::Metre>("EarthRadius", 6378100);
+    checkPositiveDerivedUnit<AstronomicalUnit, math::quantity::Metre>("AstronomicalUnit", 1.495978707e11);
 }

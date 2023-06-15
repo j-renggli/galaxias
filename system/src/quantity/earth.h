@@ -31,5 +31,15 @@ public:
     }
 };
 
+class AstronomicalUnit : public qty::DerivedQuantity<qty::BoundedMetre>
+{
+public:
+    static constexpr double factor{1.495978707e11};
+    AstronomicalUnit(double x)
+        : DerivedQuantity(x, factor, math::Range<double>::positive())
+    {
+    }
+};
+
 } // namespace system
 } // namespace galaxias
