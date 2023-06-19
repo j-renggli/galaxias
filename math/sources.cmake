@@ -10,6 +10,8 @@ set(library_src
     include/${library_name}/range.inl
     include/${library_name}/unit.h
 
+    include/${library_name}/colour/colour.h
+
     include/${library_name}/rng/fixed_proba.h
     include/${library_name}/rng/prng.h
 
@@ -20,6 +22,9 @@ set(library_src
     include/${library_name}/solver/solver.h
 
     src/analytic_roots.cpp
+
+    src/colour/blackbody.cpp
+    src/colour/colour.cpp
 
     src/rng/mersenne.cpp
     src/rng/xoshiro256.cpp

@@ -3,6 +3,8 @@ get_filename_component(library_name ${library_name} NAME)
 set(test_name test_${library_name})
 
 set(library_src
+    colour.cpp
+
     rng_mersenne.cpp
     rng_realise.cpp
     rng_xoshiro.cpp
