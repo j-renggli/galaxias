@@ -1,5 +1,7 @@
 #include <math/colour/colour.h>
 
+#include <iomanip>
+#include <sstream>
 #include <stdexcept>
 
 namespace galaxias
@@ -19,16 +21,28 @@ float gamma(float c) { return c <= lim ? (g0 * c) : (g1 * std::pow(c, g2) - g3);
 
 } // namespace
 
-Colour::Colour(float r, float g, float b)
+Colour::Colour(float r, float g, float b, float a)
     : r_{r}
     , g_{g}
     , b_{b}
+    , a_{a}
 {
-    if (r < 0. || r > 1. || g < 0. || g > 1. || b < 0. || b > 1.)
+    if (r < 0. || r > 1. || g < 0. || g > 1. || b < 0. || b > 1. || a < 0. || a > 1.)
     {
         throw std::runtime_error("Colour must have values in range [0, 1]: " + std::to_string(r) + ", " +
-                                 std::to_string(g) + ", " + std::to_string(b));
+                                 std::to_string(g) + ", " + std::to_string(b) + ", " + std::to_string(a));
     }
+}
+
+std::string Colour::hex() const
+{
+    std::stringstream out;
+    out << "0x" << std::setfill('0') << std::hex        //
+        << std::setw(2) << static_cast<int>(r_ * 255.)  //
+        << std::setw(2) << static_cast<int>(g_ * 255.)  //
+        << std::setw(2) << static_cast<int>(b_ * 255.)  //
+        << std::setw(2) << static_cast<int>(a_ * 255.); //
+    return out.str();
 }
 
 Colour Colour::fromXYZ(float x, float y, float z)

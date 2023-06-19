@@ -8,17 +8,18 @@ using namespace math;
 namespace
 {
 
-void check(const Colour& col, float r, float g, float b)
+void check(const Colour& col, float r, float g, float b, float a = 1.f)
 {
     INFO(col.r() << "f, " << col.g() << "f, " << col.b() << "f");
     CHECK(col.r() == Approx(r));
     CHECK(col.g() == Approx(g));
     CHECK(col.b() == Approx(b));
+    CHECK(col.a() == Approx(a));
 }
 
 } // namespace
 
-TEST_CASE("Basic constructor and limits")
+TEST_CASE("Colour basic constructor and limits")
 {
     check(Colour(0., 0., 0.), 0., 0., 0.);
     check(Colour(1., 1., 1.), 1., 1., 1.);
@@ -31,7 +32,15 @@ TEST_CASE("Basic constructor and limits")
     CHECK_THROWS_AS(Colour(0., 0., 1.1), std::runtime_error);
 }
 
-TEST_CASE("XYZ to sRGB")
+TEST_CASE("Colour as hex")
+{
+    CHECK(Colour(0., 0., 0., 0.).hex() == "0x00000000");
+    CHECK(Colour(0., 0.5, 0.).hex() == "0x007f00ff");
+    CHECK(Colour(0.2, 0.4, 0.6, 0.8).hex() == "0x336699cc");
+    CHECK(Colour(1., 1., 1., 1.).hex() == "0xffffffff");
+}
+
+TEST_CASE("Colour XYZ to sRGB")
 {
     check(Colour::fromXYZ(0., 0., 0.), 0., 0., 0.);
     check(Colour::fromXYZ(1., 1., 1.), 1.f, 0.900258f, 0.883567f);
