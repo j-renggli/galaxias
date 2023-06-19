@@ -11,6 +11,12 @@ namespace system
 namespace qty = math::quantity;
 namespace ratio = math::unit::ratio;
 
+namespace detail
+{
+using Magnitude =
+    math::unit::Unit<ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero, ratio::Zero, ratio::One>;
+} // namespace detail
+
 class SolarRadius : public qty::DerivedQuantity<qty::BoundedMetre>
 {
 public:
@@ -30,6 +36,19 @@ public:
     {
     }
 };
+
+class SolarLuminosity : public qty::DerivedQuantity<qty::BoundedWatt>
+{
+public:
+    static constexpr double factor{3.828e26};
+    SolarLuminosity(double x)
+        : DerivedQuantity(x, factor, math::Range<double>::positive())
+    {
+    }
+};
+
+using BolometricMagnitude = qty::Quantity<double, detail::Magnitude>;
+using ApparentMagnitude = qty::Quantity<double, detail::Magnitude>;
 
 } // namespace system
 } // namespace galaxias

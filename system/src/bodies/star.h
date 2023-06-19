@@ -1,8 +1,10 @@
 #pragma once
 
+#include <math/colour/colour.h>
 #include <math/rng/prng.h>
 #include <system/body.h>
 
+#include "../quantity/galactic.h"
 #include "../quantity/solar.h"
 
 namespace galaxias
@@ -18,9 +20,20 @@ public:
 
     qty::Kilogram mass() const override { return mass_.base(); }
 
-    qty::Metre radius() const { return radius_.base(); }
+    SolarRadius radius() const { return radius_; }
+
+    qty::Kelvin temperature() const { return temperature_; }
+
+    /// Star colour assumed from black body temperature
+    math::Colour colour() const;
+
+    SolarLuminosity luminosity() const { return luminosity_; }
 
     qty::Metre sphereOfInfluence() const override;
+
+    BolometricMagnitude absoluteMagnitude() const;
+
+    ApparentMagnitude apparentMagnitude(const Parsec& distance) const;
 
 private:
     /// Mass (prime value. All other derive from this one +- some noise)
@@ -33,7 +46,7 @@ private:
     const qty::BoundedKelvin temperature_;
 
     /// Luminosity (for absolute -> apparent magnitude)
-    const qty::BoundedWatt luminosity_;
+    const SolarLuminosity luminosity_;
 };
 
 } // namespace system

@@ -52,6 +52,7 @@ TEST_CASE("Solar quantities")
 {
     checkPositiveDerivedUnit<SolarMass, math::quantity::Kilogram>("SolarMass", 1.9885e30);
     checkPositiveDerivedUnit<SolarRadius, math::quantity::Metre>("SolarRadius", 696342000.0);
+    checkPositiveDerivedUnit<SolarLuminosity, math::quantity::Watt>("SolarLuminosity", 3.828e26);
 }
 
 TEST_CASE("Earth quantities")

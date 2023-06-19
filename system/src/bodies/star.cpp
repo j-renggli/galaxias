@@ -50,9 +50,21 @@ Star::Star(Rng&& dice)
     : mass_{generateMass(dice)}
     , radius_{generateRadius(mass_, dice)}
     , temperature_{generateTemperature(mass_, dice), math::Range<double>::positive()}
-    , luminosity_{generateLuminosity(radius_, temperature_, dice), math::Range<double>::positive()}
+    , luminosity_{generateLuminosity(radius_, temperature_, dice)}
 {
 }
+
+BolometricMagnitude Star::absoluteMagnitude() const
+{
+    return BolometricMagnitude{-2.5 * log10(luminosity_.base().value()) + 71.197425};
+}
+
+ApparentMagnitude Star::apparentMagnitude(const Parsec& distance) const
+{
+    return ApparentMagnitude{absoluteMagnitude().value() + 5. * log10(distance.value()) - 5.};
+}
+
+math::Colour Star::colour() const { return math::blackBodyColour(temperature_); }
 
 qty::Metre Star::sphereOfInfluence() const { return qty::Metre{-1.}; }
 
