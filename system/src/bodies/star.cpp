@@ -64,6 +64,38 @@ ApparentMagnitude Star::apparentMagnitude(const Parsec& distance) const
     return ApparentMagnitude{absoluteMagnitude().value() + 5. * log10(distance.value()) - 5.};
 }
 
+Star::Classification Star::classification() const
+{
+    if (mass_.value() >= 16.)
+    {
+        return Classification::O;
+    }
+    else if (mass_.value() >= 2.1)
+    {
+        return Classification::B;
+    }
+    else if (mass_.value() >= 1.4)
+    {
+        return Classification::A;
+    }
+    else if (mass_.value() >= 1.04)
+    {
+        return Classification::F;
+    }
+    else if (mass_.value() >= 0.8)
+    {
+        return Classification::G;
+    }
+    else if (mass_.value() >= 0.45)
+    {
+        return Classification::K;
+    }
+    else
+    {
+        return Classification::M;
+    }
+}
+
 math::Colour Star::colour() const { return math::blackBodyColour(temperature_); }
 
 qty::Metre Star::sphereOfInfluence() const { return qty::Metre{-1.}; }

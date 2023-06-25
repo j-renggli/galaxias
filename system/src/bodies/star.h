@@ -15,12 +15,29 @@ namespace system
 class Star : public IBody
 {
 public:
+    enum class Classification
+    {
+        W,
+        O,
+        B,
+        A,
+        F,
+        G,
+        K,
+        M,
+        L,
+        T,
+        Y,
+    };
+
     Star(math::rng::Random&& dice);
     ~Star() override {}
 
     qty::Kilogram mass() const override { return mass_.base(); }
 
     SolarRadius radius() const { return radius_; }
+
+    Classification classification() const;
 
     qty::Kelvin temperature() const { return temperature_; }
 

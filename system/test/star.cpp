@@ -13,6 +13,7 @@ TEST_CASE("Star constructor")
     CHECK(star.mass().value() == Approx{8.52478e29});
     CHECK(star.radius().value() == Approx{0.6058033842});
     CHECK(star.radius().base().value() == Approx{4.2184634e8});
+    CHECK(star.classification() == Star::Classification::M);
     CHECK(star.temperature().value() == Approx{3171.3758452529});
     CHECK(star.luminosity().value() == Approx{0.0327228045});
     CHECK(star.absoluteMagnitude().value() == Approx{absMag});
