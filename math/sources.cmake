@@ -14,6 +14,7 @@ set(library_src
 
     include/${library_name}/rng/fixed_proba.h
     include/${library_name}/rng/prng.h
+    include/${library_name}/rng/shuffle.h
 
     include/${library_name}/solver/bisection.h
     include/${library_name}/solver/brent.h

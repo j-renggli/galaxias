@@ -36,6 +36,8 @@ inline size_t realise(T&& it, const T& end, typename T::value_type x)
 class Xoshiro256
 {
 public:
+    using result_type = uint64_t;
+
     Xoshiro256(uint64_t seed);
 
     uint64_t operator()();
@@ -70,8 +72,14 @@ public:
     /// Return a value in range [0, max)
     uint64_t uniform() { return generator_(); }
     /// Return a value within the given half-open range
-    template <class R>
-    R uniform(const Range<R>& range)
+    template <class I, std::enable_if_t<std::is_integral<I>::value, bool> = true>
+    I uniform(const Range<I>& range)
+    {
+        return std::uniform_int_distribution<>{static_cast<int>(range.low()),
+                                               static_cast<int>(range.high())}(generator_);
+    }
+    template <class F, std::enable_if_t<std::is_floating_point<F>::value, bool> = true>
+    F uniform(const Range<F>& range)
     {
         return std::uniform_real_distribution<>{static_cast<double>(range.low()),
                                                 static_cast<double>(range.high())}(generator_);

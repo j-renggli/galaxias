@@ -13,6 +13,7 @@ using namespace rng;
 namespace
 {
 constexpr Range<double> range(10., 20.);
+constexpr Range<size_t> intRange(15, 30);
 
 } // namespace
 
@@ -35,6 +36,7 @@ TEST_CASE("Mersenne with seed")
     CHECK(m.gaussian<double>() == Approx(-0.5740948067));
     CHECK(m.gaussian(10.) == Approx(8.0933146552));
     CHECK(m.gaussian(-5., 0.3) == Approx(-5.2172368796));
+    CHECK(m.uniform(intRange) == 15);
 }
 
 TEST_CASE("Mersenne from existing and mask")

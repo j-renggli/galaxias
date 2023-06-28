@@ -18,6 +18,7 @@ set(library_src
     derived_quantity.cpp
     quantity.cpp
     range.cpp
+    shuffle.cpp
 
     utils/functions.h
 )

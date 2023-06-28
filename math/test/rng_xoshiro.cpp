@@ -13,6 +13,7 @@ using namespace rng;
 namespace
 {
 constexpr Range<double> range(10., 20.);
+constexpr Range<size_t> intRange(15, 30);
 
 std::vector<float> quartiles{0.25, 0.25, 0.25, 0.25};
 
@@ -55,6 +56,7 @@ TEST_CASE("Xoshiro with seed")
     CHECK(m.gaussian<double>() == Approx(-0.8325193529));
     CHECK(m.gaussian(10.) == Approx(9.7031224002));
     CHECK(m.gaussian(-5., 0.3) == Approx(-5.1379749829));
+    CHECK(m.uniform(intRange) == 22);
 }
 
 TEST_CASE("Xoshiro from existing and mask")
