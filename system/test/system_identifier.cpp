@@ -10,7 +10,7 @@ using namespace system;
 namespace
 {
 
-constexpr double idLimit{262144.};
+constexpr double idLimit{262144.}; // = 0x40000
 constexpr double angularLimit{2. * M_PI / idLimit};
 
 double radius(double r)
