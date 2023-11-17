@@ -62,8 +62,9 @@ public:
     }
     /// Construct an RNG from a specific seed
     PRNG(uint64_t seed);
-    /// Construct an RNG from an existing RNG and a mask for the new seed (updates the reference)
-    PRNG(PRNG& reference, uint64_t seedMask)
+    /// Construct an RNG from an existing RNG and an optional mask for the new seed (updates the reference)
+    template <class S>
+    PRNG(PRNG<S>& reference, uint64_t seedMask = 0)
         : PRNG{reference.uniform() ^ seedMask}
     {
     }
