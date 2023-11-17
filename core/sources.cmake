@@ -4,6 +4,9 @@ set(objects_name ${library_name}_object)
 set(library_src
     include/${library_name}/array.h
     include/${library_name}/array.inl
+    include/${library_name}/files.h
+
+    src/files.cpp
 )
 
 # Trick to show the file sources.cmake in the IDE

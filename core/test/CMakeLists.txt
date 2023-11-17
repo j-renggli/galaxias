@@ -4,6 +4,7 @@ set(test_name test_${library_name})
 
 set(library_src
     array.cpp
+    files.cpp
     owning_array.cpp
 )
 
