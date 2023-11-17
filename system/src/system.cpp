@@ -19,9 +19,6 @@ namespace system
 namespace
 {
 
-// TODO: multiple masks?
-constexpr uint64_t systemMask{0x2378A9CB3FEC95CULL};
-
 using Rng = math::rng::Random;
 
 std::string generateName(Rng&& dice)
@@ -60,14 +57,14 @@ private:
 
 System::System(SystemIdentifier&& identifier)
     : identifier_{std::move(identifier)}
-    , name_{generateName(Rng{identifier_.dice(), systemMask})}
+    , name_{generateName(Rng{identifier_.dice()})}
 {
 }
 
 void System::initialise()
 {
     // Determine number of stars
-    Rng systemDice(identifier_.dice(), systemMask);
+    Rng systemDice(identifier_.dice());
     const size_t starsCount =
         1 + systemDice.realisation(math::rng::FixThenHalve<float>({0.321, 0.479, 0.114, 0.044, 0.022, 0.010}),
                                    math::rng::FixThenHalve<float>());
@@ -76,10 +73,12 @@ void System::initialise()
     std::vector<std::shared_ptr<IBody>> bodies;
     for (size_t i = 0; i < starsCount; ++i)
     {
-        bodies.emplace_back(std::make_shared<Star>(Rng{systemDice, systemMask}));
+        bodies.emplace_back(std::make_shared<Star>(Rng{systemDice}));
     }
 
-    // Reorder stars (by mass?) randomly?
+    // Reorder stars randomly, yielding a hierarchy for the system (A > B => B orbits A, A < B => B is new attractor)
+
+    // Determine planets characteristics
 
     // Add planets
 
