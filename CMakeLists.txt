@@ -18,6 +18,7 @@ include(GenerateExportHeader)
 find_package(Catch2)
 find_package(Eigen3)
 
+add_subdirectory(core)
 add_subdirectory(math)
 add_subdirectory(orbit)
 
