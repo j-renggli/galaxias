@@ -14,7 +14,7 @@ namespace system
 namespace
 {
 
-constexpr math::Range<double> range01{0., 1.};
+constexpr math::Range<double> range01 = math::Range<double>::zeroOne();
 constexpr math::Range<double> rangePM1{-1., 1.};
 constexpr auto rangeRadian{math::Range<double>::radians()};
 
