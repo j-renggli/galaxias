@@ -19,9 +19,9 @@ public:
         return s; // * (0.5 * rdotv_ * s + k_ * s * s / 6.) - h_;
     }
 
-    double df(double s) const override { return 1.; }
+    double df(double) const override { return 1.; }
 
-    Factors factorsAt(double s) const override
+    Factors factorsAt(double) const override
     {
         return {
             1., // f
