@@ -35,6 +35,8 @@ TemporaryFolder::TemporaryFolder()
     create_directory(path_);
 }
 
+//    TemporaryFolder(const std::filesystem::path& folder);
+
 TemporaryFolder::TemporaryFolder(TemporaryFolder&& rhs) noexcept
     : path_{rhs.path_}
 {
@@ -66,6 +68,8 @@ TemporaryFile::TemporaryFile(const std::string& extension)
 {
     create_directory(path_);
 }
+
+//    TemporaryFolder(const std::filesystem::path& folder);
 
 TemporaryFile::TemporaryFile(TemporaryFile&& rhs) noexcept
     : path_{rhs.path_}

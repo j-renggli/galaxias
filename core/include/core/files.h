@@ -14,6 +14,7 @@ class TemporaryFolder
 {
 public:
     TemporaryFolder();
+    //    TemporaryFolder(const std::filesystem::path& parentFolder);
     TemporaryFolder(const TemporaryFolder&) = delete;
     TemporaryFolder(TemporaryFolder&&) noexcept;
     ~TemporaryFolder();
@@ -30,10 +31,21 @@ private:
     std::filesystem::path path_;
 };
 
+// class File
+//{
+// public:
+//     Owning1DArray<uint8_t>& data() { return data_; }
+//     const Owning1DArray<uint8_t>& data() const { return data_; }
+
+// private:
+//     Owning1DArray<uint8_t> data_;
+// };
+
 class TemporaryFile
 {
 public:
     TemporaryFile(const std::string& extension = "");
+    //    TemporaryFile(const std::filesystem::path& fileOrFolder);
     TemporaryFile(const TemporaryFile&) = delete;
     TemporaryFile(TemporaryFile&&) noexcept;
     ~TemporaryFile();

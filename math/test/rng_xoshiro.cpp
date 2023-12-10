@@ -28,6 +28,26 @@ TEST_CASE("Xoshiro with arbitrary seed")
     CHECK(x <= 20.);
 }
 
+// TEST_CASE("Xoshiro parallel")
+//{
+//     std::array<Random, 10> rngs;
+//     for (size_t i = 0; i < rngs.size(); ++i)
+//     {
+//         rngs[i] = Random(i);
+//     }
+
+//    for (size_t iter = 0; iter < 10; ++iter)
+//    {
+//        WARN("Iteration " << iter);
+//        for (size_t i = 0; i < rngs.size(); ++i)
+//        {
+//            WARN(i << ": " << rngs[i].uniform());
+//        }
+//    }
+
+//    CHECK(false);
+//}
+
 TEST_CASE("Xoshiro with seed")
 {
     Random m{42};

@@ -25,7 +25,7 @@ double generateRadius(const SolarMass& mass, Rng& dice)
 {
     // Radius is correlated to mass with simplified formula 1.13 * M^0.63
     const double x = dice.gaussian(0., 0.2);
-    return (1.13 + x) * std::pow(mass.value(), 0.63);
+    return /*std::max(0.83,*/ (1.13 + x) * std::pow(mass.value(), 0.63) /*)*/;
 }
 
 double generateTemperature(const SolarMass& mass, Rng& dice)
@@ -52,6 +52,8 @@ Star::Star(Rng&& dice)
     , temperature_{generateTemperature(mass_, dice), math::Range<double>::positive()}
     , luminosity_{generateLuminosity(radius_, temperature_, dice)}
 {
+    // /// Generate a star-specific parameter -> For what?
+    // double parameter = dice.getUniformDouble() * 10000.;
 }
 
 BolometricMagnitude Star::absoluteMagnitude() const

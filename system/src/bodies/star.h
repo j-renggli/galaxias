@@ -64,6 +64,19 @@ private:
 
     /// Luminosity (for absolute -> apparent magnitude)
     const SolarLuminosity luminosity_;
+
+    //    /// A parameter, specific for this star only
+    //    double parameter_;
+
+    //    /// Bodies in the sphere of influence
+    //    std::vector<boost::shared_ptr<IAttractor> > vptrSatellites_;
+
+    //    /// Position w.r.t. other stars
+    //    size_t position_;
+
+    //    /// The text to display when hovering over this star
+    //    UnicodeString strName_;
+    //    UnicodeString strDescription_;
 };
 
 } // namespace system

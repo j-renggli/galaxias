@@ -68,9 +68,18 @@ TEMPLATE_TEST_CASE("View on simple array has correct observables", "[array]", ui
 }
 
 // 2d, change dims
+static inline int realign(int v, int byteAlign) { return (v + byteAlign - 1) & ~(byteAlign - 1); }
 
 TEMPLATE_TEST_CASE("View on 2D arrays has correct observables", "[array]", uint8_t, int64_t, float, double)
 {
+    for (int i = 0; i < 20; ++i)
+    {
+        CHECK(i == realign(i, 1));
+        CHECK(i == realign(i, 2));
+        CHECK(i == realign(i, 4));
+        CHECK(i == realign(i, 8));
+    }
+
     std::vector<TestType> data;
     data.resize(30);
     std::iota(data.begin(), data.end(), 0);
@@ -110,6 +119,7 @@ TEMPLATE_TEST_CASE("View on 2D arrays has correct observables", "[array]", uint8
 
     // Basic array
     constexpr TestType newVal1{127};
+    //    constexpr TestType newVal2{128};
     constexpr TestType newVal3{199};
     {
         ArrayView<TestType, 2> view(data.data(), baseDims);
@@ -117,8 +127,10 @@ TEMPLATE_TEST_CASE("View on 2D arrays has correct observables", "[array]", uint8
         CHECK(view.size() == data.size());
         CHECK(view.dims() == baseDims);
         view.at(3) = newVal1;
+        //        view.at(4, 2) = newVal2;
         view.at({{2, 4}}) = newVal3;
         CHECK(view[3] == newVal1);
+        //        CHECK(view[4, 2] == newVal2);
         CHECK(view[{{2, 4}}] == newVal3);
     }
 

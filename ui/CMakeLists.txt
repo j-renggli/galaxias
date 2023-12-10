@@ -21,18 +21,32 @@ target_include_directories(${library_name} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
+find_package(Qt6 REQUIRED COMPONENTS Gui Widgets)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 target_link_libraries(${library_name}
 PUBLIC
+    core
     math
-    #orbit
+    Qt6::Gui
+    Qt6::Widgets
+    vulkan
 PRIVATE
 )
-
+#target_link_libraries(mytarget PRIVATE Qt6::Gui)
 target_link_libraries(${objects_name}
 PUBLIC
+    core
     math
     orbit
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+    vulkan
 PRIVATE
 )
 
-add_subdirectory(test)
+#add_subdirectory(test)

@@ -22,6 +22,7 @@ add_subdirectory(core)
 add_subdirectory(math)
 add_subdirectory(orbit)
 add_subdirectory(system)
+add_subdirectory(ui)
 
 set(library_src
     main.cpp
@@ -36,6 +37,7 @@ target_link_libraries(galaxias
     math
     orbit
     system
+    ui
 )
 
 source_group("res" REGULAR_EXPRESSION ".*")

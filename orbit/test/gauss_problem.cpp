@@ -305,3 +305,49 @@ TEST_CASE("Gauss problem 4")
     CHECK(vs.second[1].value() == Approx(0.48048471));
     CHECK(vs.second[2].value() == Approx(0.93781789));
 }
+
+// TEST_CASE("Gauss problem 5")
+//{
+//    //    const GravitationalParam mu{1.};
+//    //    const double t{1.092};
+//    //    coordinates::Cartesian::Position r1{{1., 0., 0.}};
+//    //    coordinates::Cartesian::Position r2{{1., 1., 1.}};
+//    //    Expectation expected{
+//    //        1., sqrt(3.), 0.9553166181, 0.7320508076, 2.7320508076, 2.7320508076, 0.1444003228, 1.8555996772};
+//    const GravitationalParam mu{3.986004418e14};
+//    const double t{1.092 * 806.8118744};
+//    constexpr double radius{6378136.};
+//    constexpr double timeFactor{806.8118744};
+//    coordinates::Cartesian::Position r1{{radius, 0., 0.}};
+//    coordinates::Cartesian::Position r2{{radius, radius, radius}};
+//    Expectation expected{radius,
+//                         radius * sqrt(3.),
+//                         0.9553166181,
+//                         29780279870194.46875,
+//                         17425391.6095841303,
+//                         111141517539186.46875,
+//                         921004.8974705327,
+//                         11835267.1025294587};
+//    std::array<GaussProblem, 2> solvers{{GaussProblem{mu, r1, r2, false}, GaussProblem{mu, r1, r2, true}}};
+
+//    for (size_t i = 0; i < 2; ++i)
+//    {
+//        solvers[i].setTargetTime(qty::Second{0.});
+
+//        const double step = (solvers[i].limitP() - solvers[i].minP()) / 100.;
+
+//        for (double p = solvers[i].minP() * 1.001; p < solvers[i].limitP() * 2.; p += step)
+//        {
+//            const double t = solvers[i].f(p);
+//            const auto v = solvers[i].velocitiesAt(p);
+//            const double nV = (v.first.norm() + v.second.norm()).value();
+//            WARN(i << "," << p << "," << t << "," << nV);
+//        }
+
+//        //    for (double p = problem.minP() * 1.1; p < problem.limitP() * 1.1; p += step) // 0.001)
+//        //    {
+//        //        problem.setP(p);
+//        //        WARN(p << "," << problem.alpha());
+//        //    }
+//    }
+//}
